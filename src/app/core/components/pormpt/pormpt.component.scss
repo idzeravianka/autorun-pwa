@@ -1,0 +1,77 @@
+@import "../../../../theme/colors";
+
+.prompt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  background-color: $white;
+  padding: 15px 0;
+
+  &__close {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 5px;
+    top: -75%;
+    font-size: 14px;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+  }
+
+  &__tiles {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+  }
+
+  &__tile {
+    min-width: 80px;
+    max-width: 80px;
+    height: 80px;
+    margin: 15px 5px;
+    border-radius: 15px;
+    background-color: $gray;
+  }
+
+  &__buttons {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  &__button {
+    margin-bottom: 5px;
+    width: 140px;
+  }
+
+  &__info-text {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  &__for-ios {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__ios-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}

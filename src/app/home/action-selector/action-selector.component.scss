@@ -1,0 +1,25 @@
+.actions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  &__label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  &__list {
+    margin-bottom: 10px;
+  }
+
+  &__send-button {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,194 @@
+@import '../../theme/colors';
+
+.dashboard {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  padding: 15px 30px 15px 30px;
+  box-sizing: border-box;
+
+  &__section {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    column-gap: 50px;
+    max-width: 100%;
+
+    &_edit-mode {
+      .dashboard__sensor-data:nth-child(2n) {
+        animation: wiggle .35s infinite;
+      }
+
+      .dashboard__sensor-data:nth-child(2n-1) {
+        animation: reverse-wiggle .35s infinite;
+      }
+
+      .dashboard__sensor-data-edit {
+        display: block;
+      }
+    }
+  }
+
+  &__update-time {
+    margin-bottom: 5px;
+    width: 100%;
+    height: 25px;
+    font-size: 16px;
+    line-height: 18px;
+    color: $prompt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+  }
+
+  &__sensor-data {
+    min-width: 60px;
+    margin: 5px 0 10px;
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    &-edit {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    &-edit_blur {
+       backdrop-filter: blur(1px);
+     }
+  }
+
+  &__sensor-label {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 21px;
+    padding-top: 5px;
+  }
+
+  &__sensor-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__sensor-prompt {
+    width: max-content;
+    color: $prompt;
+    font-size: 12px;
+  }
+
+  &__popover {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    &-title {
+      text-align: center;
+      margin-top: 15px;
+      width: 180px;
+    }
+
+    &-button {
+      width: 130px;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+  }
+}
+
+.edit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #d3d3d3;
+  border-radius: 100%;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active-color {
+  color: $base-accent;
+}
+
+.reload-icon-wrapper {
+  width: 40px;
+  height: 40px;
+}
+
+.reload-icon {
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: transparent $white;
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  &:before, &:after {
+    box-sizing: border-box;
+    border-style: solid;
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  &:after {
+    border-color: transparent transparent transparent $white;
+    border-width: 4px 0 4px 6px;
+    top: -5px;
+    left: 0;
+  }
+  &:before {
+    border-color: transparent $white transparent transparent;
+    border-width: 4px 6px 4px 0;
+    bottom: -5px;
+    right: 0;
+  }
+}
+
+.reload-icon-spin {
+  -webkit-animation: rotate-reload-icon .8s linear infinite;
+  animation: rotate-reload-icon .8s linear infinite;
+}
+
+@-webkit-keyframes rotate-reload-icon {
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes rotate-reload-icon {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(-1deg);
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    transform: rotate(1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes reverse-wiggle {
+  0% {
+    transform: rotate(1deg);
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
