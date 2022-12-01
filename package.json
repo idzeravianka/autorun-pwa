@@ -1,6 +1,7 @@
 {
   "name": "autorun-pwa",
   "version": "0.0.0",
+  "homepage": "https://idzeravianka.github.io/autorun-pwa/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
