@@ -1,0 +1,13 @@
+<div class="header-wrapper">
+  <div class="gears-container">
+    <div
+      class="gear-rotate"
+      [ngClass]="{
+        'setting-open-animation': (isSettingsOpen$ | async),
+        'setting-close-animation': !(isSettingsOpen$ | async)
+      }"
+      [routerLink]="['settings']"
+      [routerToggle]="['/']"
+      [routerLinkActive]="'gear-animate'"></div>
+  </div>
+</div>
