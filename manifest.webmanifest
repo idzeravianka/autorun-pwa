@@ -1,7 +1,7 @@
 {
   "name": "autorun-pwa",
   "short_name": "autorun-pwa",
-  "theme_color": "#1976d2",
+  "theme_color": "#10AC84",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
