@@ -17,7 +17,7 @@ import { HeaderModule } from './modules/header/header.module';
     AppRoutingModule,
     HeaderModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: true,
+      enabled: false,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',

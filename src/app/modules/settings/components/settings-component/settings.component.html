@@ -1,1 +1,31 @@
-<p>settings works!</p>
+<div class="settings">
+  <div class="settings__title">Настройки</div>
+  <mat-form-field class="settings__field">
+    <mat-label>Сервер (MQTT broker):</mat-label>
+    <input matInput placeholder="srv2.clusterfly.ru">
+  </mat-form-field>
+  <mat-form-field class="settings__field">
+    <mat-label>Порт (MQTT port):</mat-label>
+    <input matInput placeholder="9994">
+  </mat-form-field>
+  <mat-form-field class="settings__field">
+    <mat-label>Логин (MQTT user):</mat-label>
+    <input matInput placeholder="user">
+  </mat-form-field>
+  <mat-form-field class="settings__field">
+    <mat-label>Пароль (MQTT password):</mat-label>
+    <input matInput placeholder="qwerty">
+  </mat-form-field>
+  <mat-form-field class="settings__field">
+    <mat-label>Префикс топика (prefix):</mat-label>
+    <input matInput placeholder="user_12345678/c5">
+  </mat-form-field>
+  <div class="settings__field">
+    <button mat-raised-button color="primary" class="settings__button">Сохранить</button>
+    <button mat-raised-button class="settings__button">Очистить</button>
+  </div>
+
+  <div class="settings__prompt">
+    Рекомендуемые MQTT сервера: wqtt.ru, clusterfly.ru, cloudmqtt.com, mqtt.by.
+  </div>
+</div>

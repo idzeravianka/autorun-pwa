@@ -1,3 +1,58 @@
+@use '@angular/material' as mat;
+@include mat.core();
+@import "colors";
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+$green-custom-palette: (
+  50: lighten($base, 60%),
+  100: lighten($base, 50%),
+  200: lighten($base, 40%),
+  300: lighten($base, 30%),
+  400: lighten($base, 15%),
+  500: $base,
+  600: darken($base, 10%),
+  700: darken($base, 15%),
+  800: darken($base, 20%),
+  900: darken($base, 25%),
+  A100: lighten($base, 50%),
+  A200: lighten($base, 40%),
+  A400: lighten($base, 15%),
+  A700: darken($base, 15%),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$autorun-pwa-primary: mat.define-palette($green-custom-palette);
+$autorun-pwa-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$autorun-pwa-warn: mat.define-palette(mat.$red-palette);
+
+$autorun-pwa-theme: mat.define-light-theme((
+  color: (
+    primary: $autorun-pwa-primary,
+    accent: $autorun-pwa-accent,
+    warn: $autorun-pwa-warn,
+  )
+));
+
+@include mat.all-component-themes($autorun-pwa-theme);
+
 /* RESET CSS Start */
 
 html, body, div, span, applet, object, iframe,
@@ -45,3 +100,6 @@ table {
 }
 
 /* RESET CSS End */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
