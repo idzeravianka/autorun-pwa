@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1669980771055,
+  "timestamp": 1669981351187,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -18,7 +18,7 @@
         "/autorun-pwa/manifest.webmanifest",
         "/autorun-pwa/polyfills.b1491a414f189971.js",
         "/autorun-pwa/runtime.cd7bf296e8c45894.js",
-        "/autorun-pwa/styles.51353e18920d6ad3.css"
+        "/autorun-pwa/styles.b2fba794ebe38fd8.css"
       ],
       "patterns": []
     },
@@ -54,12 +54,12 @@
     "/autorun-pwa/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/autorun-pwa/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/autorun-pwa/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/autorun-pwa/index.html": "7742eedbfd0d3a50a161056bb986046703e48b94",
+    "/autorun-pwa/index.html": "f6a8689d3716660f5a6e0bd50acacb075c480e1a",
     "/autorun-pwa/main.fcb36785560331db.js": "28307a73d29c3ea116ea0df05b730bfa4c4ed64e",
     "/autorun-pwa/manifest.webmanifest": "8b2a62b306b96c7c18c76a25ff3ceb8933df106c",
     "/autorun-pwa/polyfills.b1491a414f189971.js": "0c2240b6761c083ec18dd795ff1a38f147f14ed5",
     "/autorun-pwa/runtime.cd7bf296e8c45894.js": "f64331153cde657695db2c38bedc693167c07fe8",
-    "/autorun-pwa/styles.51353e18920d6ad3.css": "08c034656ccf8e95f0cbdd6cd11f8ae496afc9c9"
+    "/autorun-pwa/styles.b2fba794ebe38fd8.css": "5a726c51c2774859b9b7a5f31030606f04b61b3c"
   },
   "navigationUrls": [
     {

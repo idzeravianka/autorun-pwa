@@ -9,5 +9,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   public title = 'autorun-pwa';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    document.addEventListener('touchstart', (event) => {
+      if ((event as any).pageX > 10 && (event as any).pageX < window.innerWidth - 10) {
+        return;
+      }
+      event.preventDefault();
+    });
+  }
 }
