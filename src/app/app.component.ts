@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { MqttService } from './services/mqtt.service';
 
 @Component({
   selector: 'az-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'autorun-pwa';
 
-  constructor(private router: Router) {
-    document.addEventListener('touchstart', (event) => {
-      if ((event as any).pageX > 10 && (event as any).pageX < window.innerWidth - 10) {
-        return;
-      }
-      event.preventDefault();
-    });
+  constructor(private router: Router, private mqttService: MqttService) {
+  }
+
+  public ngOnInit() {
+    this.mqttService.connect();
   }
 }

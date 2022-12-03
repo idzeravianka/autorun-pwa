@@ -6,10 +6,19 @@
           linear-gradient(120deg,transparent 42%, $color 42%, $color 58%, transparent 58%);
 }
 
+.w {
+  width: 48px;
+}
+
+.title {
+  font-size: 18px;
+  color: white;
+  padding-top: 15px;
+}
 
 .header-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   background-color: $base;
 }
 

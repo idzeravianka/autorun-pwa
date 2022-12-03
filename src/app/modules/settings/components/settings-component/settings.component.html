@@ -1,28 +1,58 @@
-<div class="settings">
+<div class="settings" [formGroup]="settingsForm" *ngIf="!!settingsForm">
   <div class="settings__title">Настройки</div>
   <mat-form-field class="settings__field">
     <mat-label>Сервер (MQTT broker):</mat-label>
-    <input matInput placeholder="srv2.clusterfly.ru">
+    <input matInput formControlName="server" placeholder="srv2.clusterfly.ru">
+    <mat-error *ngIf="settingsForm.controls.server.errors?.pattern">
+      Неверный формат
+    </mat-error>
+    <mat-error *ngIf="settingsForm.controls.server.errors?.required">
+      Поле обязательно для заполнения
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="settings__field">
     <mat-label>Порт (MQTT port):</mat-label>
-    <input matInput placeholder="9994">
+    <input matInput formControlName="port" placeholder="9994">
+    <mat-error *ngIf="settingsForm.controls.port.errors?.pattern">
+      Неверный формат
+    </mat-error>
+    <mat-error *ngIf="settingsForm.controls.port.errors?.required">
+      Поле обязательно для заполнения
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="settings__field">
     <mat-label>Логин (MQTT user):</mat-label>
-    <input matInput placeholder="user">
+    <input matInput formControlName="user" placeholder="user">
+    <mat-error *ngIf="settingsForm.controls.user.errors?.pattern">
+      Неверный формат
+    </mat-error>
+    <mat-error *ngIf="settingsForm.controls.user.errors?.required">
+      Поле обязательно для заполнения
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="settings__field">
     <mat-label>Пароль (MQTT password):</mat-label>
-    <input matInput placeholder="qwerty">
+    <input matInput type="password" formControlName="pass" placeholder="qwerty">
+    <mat-error *ngIf="settingsForm.controls.pass.errors?.pattern">
+      Неверный формат
+    </mat-error>
+    <mat-error *ngIf="settingsForm.controls.pass.errors?.required">
+      Поле обязательно для заполнения
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="settings__field">
     <mat-label>Префикс топика (prefix):</mat-label>
-    <input matInput placeholder="user_12345678/c5">
+    <input matInput formControlName="topic" placeholder="user_12345678/c5">
+    <mat-error *ngIf="settingsForm.controls.topic.errors?.pattern">
+      Неверный формат
+    </mat-error>
+    <mat-error *ngIf="settingsForm.controls.topic.errors?.required">
+      Поле обязательно для заполнения
+    </mat-error>
   </mat-form-field>
   <div class="settings__field">
-    <button mat-raised-button color="primary" class="settings__button">Сохранить</button>
-    <button mat-raised-button class="settings__button">Очистить</button>
+    <button mat-raised-button color="primary" class="settings__button" (click)="saveSettings()">Сохранить</button>
+    <button mat-raised-button class="settings__button" (click)="resetForm()">Очистить</button>
   </div>
 
   <div class="settings__prompt">

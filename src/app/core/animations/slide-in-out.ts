@@ -1,7 +1,7 @@
 import { trigger, state, animate, transition, style, keyframes } from '@angular/animations';
 
-export const slideInOutAnimation =
-  trigger('slideInOutAnimation', [
+export const slideInOutAnimation = (animationDirection: string) => {
+  return trigger('slideInOutAnimation', [
     state('*', style({
       position: 'relative',
       backgroundColor: 'white',
@@ -9,15 +9,16 @@ export const slideInOutAnimation =
 
     transition(':enter', [
       animate('.3s', keyframes([
-        style({ left: '100%', backgroundColor: 'gainsboro' }),
-        style({ left: '0', backgroundColor: 'white' }),
+        style({ [animationDirection]: '100%', backgroundColor: 'gainsboro' }),
+        style({ [animationDirection]: '0', backgroundColor: 'white' }),
       ])),
     ]),
 
     transition(':leave', [
       animate('.3s', keyframes([
-        style({ left: '0' }),
-        style({ left: '100%', backgroundColor: 'gainsboro' }),
+        style({ [animationDirection]: '0' }),
+        style({ [animationDirection]: '100%', backgroundColor: 'gainsboro' }),
       ])),
     ]),
   ]);
+};

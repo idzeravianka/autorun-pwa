@@ -1,0 +1,76 @@
+@import 'colors';
+
+.dashboard {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  column-gap: 50px;
+  padding: 2px 15px 15px 15px;
+
+  &__update-time {
+    width: 100%;
+    height: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    color: $prompt;
+  }
+
+  &__sensor-data {
+  min-width: 60px;
+  margin: 5px 0 10px;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  }
+
+  &__sensor-label {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 21px;
+  padding-top: 5px;
+  }
+
+  &__sensor-icon {
+  width: 35px;
+  height: 35px;
+  }
+
+  &__sensor-prompt {
+  position: absolute;
+  bottom: -15px;
+  width: max-content;
+  color: $prompt;
+  font-size: 12px;
+  }
+
+  &__start-stop-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+  }
+
+  &__start-stop-button {
+    width: 150px;
+    height: 150px;
+
+    &::ng-deep .mat-button-wrapper {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__start-stop-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  &__start-stop-title {
+    font-size: 12px;
+    line-height: 21px;
+  }
+}

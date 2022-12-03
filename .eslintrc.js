@@ -37,7 +37,7 @@ module.exports = {
         "@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "az", "style": "kebab-case" }],
         "@angular-eslint/directive-class-suffix": "error",
         "@angular-eslint/directive-selector": ["error", { "type": "attribute", "style": "camelCase" }],
-        "@angular-eslint/no-host-metadata-property": ["error", { "allowStatic": true }],
+        "@angular-eslint/no-host-metadata-property": "error",
         "@angular-eslint/no-input-rename": "error",
         "@angular-eslint/no-inputs-metadata-property": "error",
         "@angular-eslint/no-output-on-prefix": "error",
@@ -47,7 +47,6 @@ module.exports = {
         "@angular-eslint/use-pipe-transform-interface": "error",
 
         //typescript-specific rules
-        "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "constructors": 'no-public' } } ],
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/indent": [
           "error",
