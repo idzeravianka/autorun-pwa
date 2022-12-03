@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1669981839374,
+  "timestamp": 1670092226236,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -11,14 +11,16 @@
         "ignoreVary": true
       },
       "urls": [
-        "/autorun-pwa/935.64061d24fda2d198.js",
+        "/autorun-pwa/263.653f858c3b2ab010.js",
+        "/autorun-pwa/524.697e28f704d20373.js",
+        "/autorun-pwa/731.fb17f116bdacc97c.js",
         "/autorun-pwa/favicon.ico",
         "/autorun-pwa/index.html",
-        "/autorun-pwa/main.27bfa98b1555f558.js",
+        "/autorun-pwa/main.39b45949b9cede52.js",
         "/autorun-pwa/manifest.webmanifest",
         "/autorun-pwa/polyfills.b1491a414f189971.js",
-        "/autorun-pwa/runtime.cd7bf296e8c45894.js",
-        "/autorun-pwa/styles.e735c920eed9bc4d.css"
+        "/autorun-pwa/runtime.bc837eeddd348121.js",
+        "/autorun-pwa/styles.76d701513a954857.css"
       ],
       "patterns": []
     },
@@ -37,14 +39,24 @@
         "/autorun-pwa/assets/icons/icon-384x384.png",
         "/autorun-pwa/assets/icons/icon-512x512.png",
         "/autorun-pwa/assets/icons/icon-72x72.png",
-        "/autorun-pwa/assets/icons/icon-96x96.png"
+        "/autorun-pwa/assets/icons/icon-96x96.png",
+        "/autorun-pwa/assets/svg/car.svg",
+        "/autorun-pwa/assets/svg/channel.svg",
+        "/autorun-pwa/assets/svg/counter.svg",
+        "/autorun-pwa/assets/svg/ignition.svg",
+        "/autorun-pwa/assets/svg/relay.svg",
+        "/autorun-pwa/assets/svg/temperature.svg",
+        "/autorun-pwa/assets/svg/timer.svg",
+        "/autorun-pwa/assets/svg/voltage.svg"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/autorun-pwa/935.64061d24fda2d198.js": "5639b07d5b3d4ce46f0cad2bbdfa82677b30cf7d",
+    "/autorun-pwa/263.653f858c3b2ab010.js": "ed3e99d96c01aa80ebde83ea76645149254c6593",
+    "/autorun-pwa/524.697e28f704d20373.js": "0f673caf8214266d4f744891538f7ee5b050b7b2",
+    "/autorun-pwa/731.fb17f116bdacc97c.js": "f792d0060dfe0ff036cba84bb8f700bae43f177f",
     "/autorun-pwa/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "/autorun-pwa/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "/autorun-pwa/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -53,13 +65,21 @@
     "/autorun-pwa/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
     "/autorun-pwa/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/autorun-pwa/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/autorun-pwa/assets/svg/car.svg": "14f5bc23ac9e155328b99e732483a86b73557a09",
+    "/autorun-pwa/assets/svg/channel.svg": "08c1ef067dd8b595e6385edb94ffe85b3a35819d",
+    "/autorun-pwa/assets/svg/counter.svg": "b692f859073cc59ceb4dfc3521c9e2c740de06ad",
+    "/autorun-pwa/assets/svg/ignition.svg": "c82c19e1e82ec21cdd08b6c9e2e3711538996327",
+    "/autorun-pwa/assets/svg/relay.svg": "452e615a505ce358d4b43efebd7625dde0e71cb0",
+    "/autorun-pwa/assets/svg/temperature.svg": "9441df4e21e70a221b13604e427dc6280dc27c43",
+    "/autorun-pwa/assets/svg/timer.svg": "a6d780a45d47c0ef324e1e2b0e19ec65f877d00a",
+    "/autorun-pwa/assets/svg/voltage.svg": "a5bb27346ecb3cb8f9de541c754e3363602fd6f0",
     "/autorun-pwa/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/autorun-pwa/index.html": "6ef3bf1817f923727101d33c6c1581fcd571e84b",
-    "/autorun-pwa/main.27bfa98b1555f558.js": "7824d420ca84b1cd54ecc34fa7b06e432ccb80f9",
+    "/autorun-pwa/index.html": "e1c65abda5542252306ddb8f5deb24f2c26091c7",
+    "/autorun-pwa/main.39b45949b9cede52.js": "8f72a001c838dadc9e967e1d02c64989fedc9244",
     "/autorun-pwa/manifest.webmanifest": "8b2a62b306b96c7c18c76a25ff3ceb8933df106c",
     "/autorun-pwa/polyfills.b1491a414f189971.js": "0c2240b6761c083ec18dd795ff1a38f147f14ed5",
-    "/autorun-pwa/runtime.cd7bf296e8c45894.js": "f64331153cde657695db2c38bedc693167c07fe8",
-    "/autorun-pwa/styles.e735c920eed9bc4d.css": "391b9f6f7c79027b3d13fe6306fe28083a684aea"
+    "/autorun-pwa/runtime.bc837eeddd348121.js": "da25398f2451ced43c860de303faf3b335d7bc03",
+    "/autorun-pwa/styles.76d701513a954857.css": "a6fb0407d0b1be877e959ed8d59f00d0f5d89adf"
   },
   "navigationUrls": [
     {
