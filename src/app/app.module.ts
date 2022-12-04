@@ -20,7 +20,7 @@ import { HeaderModule } from './modules/header/header.module';
     HeaderModule,
     NotifierModule.withConfig(customNotifierOptions),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: false,
+      enabled: true,
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
