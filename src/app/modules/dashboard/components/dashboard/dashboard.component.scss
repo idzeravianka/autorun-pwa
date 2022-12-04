@@ -62,6 +62,14 @@
       justify-content: center;
       align-items: center;
     }
+
+    &.stop-color {
+      background-color: $red;
+    }
+  }
+
+  &__start-stop-spinner {
+    position: absolute;
   }
 
   &__start-stop-icon {

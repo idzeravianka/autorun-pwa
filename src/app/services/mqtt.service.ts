@@ -41,6 +41,12 @@ export class MqttService {
     }
   }
 
+  public sendCommand(command: string): void {
+    const message_pub = new Message(command);
+    message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
+    this.client.send(message_pub);
+  }
+
   private initClient(): void {
     this.client = new Client(this.mqttSettings.server, Number(this.mqttSettings.port), `web_${ parseInt(`${Math.random() * 100}`, 10)}`);
     this.client.onConnectionLost = this.onConnectionLost;

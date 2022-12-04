@@ -1,6 +1,6 @@
 {
-  "name": "autorun-pwa",
-  "short_name": "autorun-pwa",
+  "name": "Анатомия автозапуска",
+  "short_name": "Анатомия автозапуска",
   "theme_color": "#10AC84",
   "background_color": "#fafafa",
   "display": "standalone",

@@ -31,9 +31,17 @@
   </div>
 
   <div class="dashboard__start-stop-button-wrapper">
-    <button class="dashboard__start-stop-button" mat-mini-fab color="primary">
+    <button
+      class="dashboard__start-stop-button"
+      mat-mini-fab color="primary"
+      [class.stop-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 && !isStartStopExecuting"
+      [disabled]="isStartStopExecuting"
+      (click)="startStopEngine()">
       <img class="dashboard__start-stop-icon" src="assets/svg/car.svg" alt="">
-      <span class="dashboard__start-stop-title">Запуск двигателя</span>
+      <mat-spinner class="dashboard__start-stop-spinner" color="primary" *ngIf="isStartStopExecuting"></mat-spinner>
+      <span class="dashboard__start-stop-title" *ngIf="!isStartStopExecuting">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'Стоп двигателя' : 'Запуск двигателя'}}
+      </span>
     </button>
   </div>
 
