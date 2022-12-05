@@ -2,10 +2,18 @@
 
 .dashboard {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  column-gap: 50px;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: calc(100vh - 48px);
   padding: 2px 15px 15px 15px;
+  box-sizing: border-box;
+
+  &__section {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    column-gap: 50px;
+  }
 
   &__update-time {
     width: 100%;
@@ -38,47 +46,41 @@
   }
 
   &__sensor-prompt {
-  position: absolute;
-  bottom: -15px;
-  width: max-content;
-  color: $prompt;
-  font-size: 12px;
+    width: max-content;
+    color: $prompt;
+    font-size: 12px;
+  }
+
+  &__control-buttons {
+    column-gap: 10px;
   }
 
   &__start-stop-button-wrapper {
-    width: 100%;
+    width: 150px;
+    height: 150px;
     display: flex;
     justify-content: center;
     margin: 25px 0;
-  }
-
-  &__start-stop-button {
-    width: 150px;
-    height: 150px;
-
-    &::ng-deep .mat-button-wrapper {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &.stop-color {
-      background-color: $red;
-    }
-  }
-
-  &__start-stop-spinner {
-    position: absolute;
-  }
-
-  &__start-stop-icon {
-    width: 70px;
-    height: 70px;
   }
 
   &__start-stop-title {
     font-size: 12px;
     line-height: 21px;
   }
+
+  &__open-close-button-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+
+    & .open-lock-button, .close-lock-button {
+      width: 65px;
+      height: 65px;
+    }
+  }
+}
+
+.stop-color ::ng-deep  .hold-button{
+  background-color: $red;
+  border: 5px solid $red-accent;
 }

@@ -40,7 +40,7 @@ $green-custom-palette: (
 );
 
 $autorun-pwa-primary: mat.define-palette($green-custom-palette);
-$autorun-pwa-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$autorun-pwa-accent: mat.define-palette(mat.$teal-palette, A200, A100, A400);
 
 $autorun-pwa-warn: mat.define-palette(mat.$red-palette);
 
@@ -117,9 +117,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 //}
 
 .notifier__notification {
-  width: 100%;
+  width: 95%;
   height: 48px;
   display: flex;
   justify-content: center;
-  border-radius: 0;
 }

@@ -15,11 +15,16 @@ import { MqttService } from '../../../../services/mqtt.service';
 })
 export class DashboardComponent implements OnInit {
   public updateTime$: BehaviorSubject<string> = this.mqttService.updateTime$;
-  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse> = this.mqttService.sensorsData$;
+  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = this.mqttService.sensorsData$;
   public pinStatuses: typeof PinStatuses = PinStatuses;
   public temperatureStatuses: typeof TemperatureStatuses = TemperatureStatuses;
   public timeStatuses: typeof TimeStatuses = TimeStatuses;
   public isStartStopExecuting: boolean;
+  public isOpenLockExecuting: boolean;
+  public isCloseLockExecuting: boolean;
+  public isFanOnExecuting: boolean;
+  public isFanOffExecuting: boolean;
+  public startStopPressProgress: number = 0;
 
   constructor(private mqttService: MqttService) { }
 
@@ -28,7 +33,7 @@ export class DashboardComponent implements OnInit {
 
   public startStopEngine(): void {
     this.sensorsData$.pipe(
-      filter<MqttSensorsDataResponse>(Boolean),
+      filter<MqttSensorsDataResponse | null>(Boolean),
       take(1),
     ).subscribe(sensorsData => {
       if (sensorsData.pin?.[PinStatuses.K2] === 0) {
@@ -39,18 +44,40 @@ export class DashboardComponent implements OnInit {
         this.mqttService.sendCommand(MqttCommands.StopEngine);
       }
 
-      this.runStartStopSpinner();
+      this.runStartStopSpinner('isStartStopExecuting');
     });
   }
 
-  private runStartStopSpinner(): void {
-    this.isStartStopExecuting = true;
+  public fanOn(): void {
+    this.mqttService.sendCommand(MqttCommands.FanOn);
+    this.runStartStopSpinner('isFanOnExecuting');
+  }
+
+  public fanOff(): void {
+    this.mqttService.sendCommand(MqttCommands.FanOff);
+    this.runStartStopSpinner('isFanOffExecuting');
+  }
+
+  public openLock(): void {
+    this.mqttService.sendCommand(MqttCommands.OpenLock);
+    this.runStartStopSpinner('isOpenLockExecuting');
+  }
+
+  public closeLock(): void {
+    this.mqttService.sendCommand(MqttCommands.CloseLock);
+    this.runStartStopSpinner('isCloseLockExecuting');
+  }
+
+  private runStartStopSpinner(
+    key: 'isStartStopExecuting' | 'isOpenLockExecuting' | 'isCloseLockExecuting' | 'isFanOnExecuting' | 'isFanOffExecuting',
+  ): void {
+    this[key] = true;
     this.sensorsData$.pipe(
       skip(1),
-      filter<MqttSensorsDataResponse>(Boolean),
+      filter<MqttSensorsDataResponse | null>(Boolean),
       take(1),
     ).subscribe(() => {
-      this.isStartStopExecuting = false;
+      this[key] = false;
     });
   }
 

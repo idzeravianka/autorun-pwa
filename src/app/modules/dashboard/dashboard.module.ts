@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { HoldButtonModule } from '../../shared/modules/hold-button/hold-button.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -17,6 +18,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    HoldButtonModule,
   ],
 })
 export class DashboardModule { }

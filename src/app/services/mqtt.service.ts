@@ -4,14 +4,14 @@ import { NotifierService } from 'angular-notifier';
 import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
 import { BehaviorSubject } from 'rxjs';
 
-import { initialMqttSensorsData, MqttSensorsDataResponse } from '../core/interfaces/mqtt-sensors-data-response';
+import { MqttSensorsDataResponse } from '../core/interfaces/mqtt-sensors-data-response';
 import { MqttSettings } from '../core/interfaces/mqtt-settings';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MqttService {
-  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse> = new BehaviorSubject<MqttSensorsDataResponse>(initialMqttSensorsData);
+  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = new BehaviorSubject<MqttSensorsDataResponse | null>(null);
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   private client: Client;

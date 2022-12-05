@@ -1,0 +1,22 @@
+<button
+  class="hold-button"
+  mat-mini-fab color="primary"
+  [class.disabled]="this.disabled"
+  [disabled]="this.disabled"
+  (touchstart)="onStartStopPressed($event)"
+  (touchend)="onStartStopUnPressed($event)"
+  (mousedown)="onStartStopPressed($event)"
+  (mouseup)="onStartStopUnPressed($event)">
+  <img class="hold-button__icon" [src]="iconUrl" alt="">
+  <mat-spinner class="hold-button__spinner" color="primary" *ngIf="isLoading"></mat-spinner>
+  <mat-progress-spinner
+    *ngIf="progressPercent"
+    class="progress-spinner"
+    color="accent"
+    mode="determinate"
+    [value]="progressPercent">
+  </mat-progress-spinner>
+  <ng-content>
+
+  </ng-content>
+</button>
