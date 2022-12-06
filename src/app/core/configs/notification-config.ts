@@ -8,7 +8,7 @@ export const customNotifierOptions: NotifierOptions = {
     },
     vertical: {
       position: 'bottom',
-      distance: 10,
+      distance: 20,
       gap: 10,
     },
   },
