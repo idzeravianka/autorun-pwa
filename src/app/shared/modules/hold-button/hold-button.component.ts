@@ -23,7 +23,7 @@ export class HoldButtonComponent {
   private pressedTimerId: any;
 
   public onStartStopPressed(e: Event): void {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     if (this.disabled) return;
     this.progressTimerId = setInterval(() => {
       this.progressPercent += this.calculateIncrement();
@@ -35,7 +35,7 @@ export class HoldButtonComponent {
   }
 
   public onStartStopUnPressed(e: Event): void {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     this.clearIntervals();
   }
 
