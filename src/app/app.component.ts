@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MqttService } from './services/mqtt.service';
+import { MqttService } from './core/services/mqtt.service';
 
 @Component({
   selector: 'az-root',

@@ -4,8 +4,8 @@ import { NotifierService } from 'angular-notifier';
 import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
 import { BehaviorSubject } from 'rxjs';
 
-import { MqttSensorsDataResponse } from '../core/interfaces/mqtt-sensors-data-response';
-import { MqttSettings } from '../core/interfaces/mqtt-settings';
+import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
+import { MqttSettings } from '../interfaces/mqtt-settings';
 
 @Injectable({
   providedIn: 'root',

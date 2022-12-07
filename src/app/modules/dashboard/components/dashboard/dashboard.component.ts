@@ -5,7 +5,7 @@ import { PinStatuses } from '../../../../core/enums/pin-statuses';
 import { TemperatureStatuses } from '../../../../core/enums/temperature-statuses';
 import { TimeStatuses } from '../../../../core/enums/time-statuses';
 import { MqttSensorsDataResponse } from '../../../../core/interfaces/mqtt-sensors-data-response';
-import { MqttService } from '../../../../services/mqtt.service';
+import { MqttService } from '../../../../core/services/mqtt.service';
 
 @Component({
   selector: 'az-dashboard',

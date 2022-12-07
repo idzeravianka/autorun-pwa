@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { skip, take } from 'rxjs';
 
-import { MqttService } from '../../../../services/mqtt.service';
+import { MqttService } from '../../../../core/services/mqtt.service';
 
 @Component({
   selector: 'az-timer',

@@ -4,7 +4,7 @@ import { BehaviorSubject, filter, skip, take } from 'rxjs';
 import { MqttCommands } from '../../../../core/enums/mqtt-commands';
 import { PinStatuses } from '../../../../core/enums/pin-statuses';
 import { MqttSensorsDataResponse } from '../../../../core/interfaces/mqtt-sensors-data-response';
-import { MqttService } from '../../../../services/mqtt.service';
+import { MqttService } from '../../../../core/services/mqtt.service';
 
 @Component({
   selector: 'az-main-control-buttons',

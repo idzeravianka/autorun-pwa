@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { matDialogConfig } from '../../../../core/configs/mat-dialog-config';
-import { MqttService } from '../../../../services/mqtt.service';
+import { MqttService } from '../../../../core/services/mqtt.service';
 import { AgreementDialogComponent } from '../../../../shared/modules/agreement-dialog/agreement-dialog.component';
 
 @Component({
