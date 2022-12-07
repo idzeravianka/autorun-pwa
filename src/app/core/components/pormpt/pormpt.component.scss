@@ -1,28 +1,64 @@
-.android-prompt {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+@import "colors";
 
-.ios-prompt {
+.prompt {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  .close-ios-inv {
+  overflow: hidden;
+
+  &__close {
     position: absolute;
     right: 0;
     top: 0;
   }
-  div {
+
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &__tiles {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+  }
+
+  &__tile {
+    width: 80px;
+    height: 80px;
+    margin: 15px 5px;
+    border-radius: 15px;
+    background-color: $gray;
+  }
+
+  &__buttons {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  &__button {
+    margin-bottom: 5px;
+    width: 110px;
+  }
+
+  &__info-text {
     text-align: center;
-    padding: 10px 25px 0;
-    mat-icon {
-      position: relative;
-      top: -7px;
-    }
+    margin-bottom: 15px;
   }
-  img {
-    display: inline;
+
+  &__for-ios {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
+
+  &__ios-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.bold {
+  font-weight: bold;
 }

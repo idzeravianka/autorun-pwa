@@ -29,7 +29,7 @@ const initializer = (pwaService: PwaPromptService) => () => pwaService.initPwaPr
     HeaderModule,
     NotifierModule.withConfig(customNotifierOptions),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: false,
+      enabled: true,
       registrationStrategy: 'registerWhenStable:30000',
     }),
     MatToolbarModule,

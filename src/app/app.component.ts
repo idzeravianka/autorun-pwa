@@ -9,7 +9,7 @@ import { MqttService } from './core/services/mqtt.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public title = 'autorun-pwa';
+  public title = 'Анатомия автозапуска';
 
   constructor(private router: Router, private mqttService: MqttService) {
   }

@@ -1,14 +1,21 @@
-<mat-toolbar *ngIf="data.mobileType === 'android'" color="primary" class="android-prompt">
-  <button mat-button (click)="installPwa()">
-    Установить приложение
-  </button>
-  <button mat-icon-button (click)="close()">
-    <mat-icon>close</mat-icon>
-  </button>
-</mat-toolbar>
-
-<div *ngIf="data.mobileType === 'ios'" class="ios-prompt">
-  <button class="close-ios-inv" mat-button color="primary" (click)="close()"><mat-icon>close</mat-icon></button>
-  <div>Для установки этого веб-приложения на устройство, нажмите кнопку «Меню», а затем кнопку «Добавить на главный экран».</div>
-  <div><img src="./assets/ios-menu-btn.png"> <mat-icon>navigate_next</mat-icon> <img src="./assets/ios-add-btn.png"></div>
+<div class="prompt">
+  <button class="prompt__close" mat-button color="primary" (click)="close()"><mat-icon>close</mat-icon></button>
+  <div class="prompt__title">Установи приложение</div>
+  <div class="prompt__tiles">
+    <div class="prompt__tile"></div>
+    <div class="prompt__tile"></div>
+    <img class="prompt__tile" src="assets/icons/icon-512x512.png">
+    <div class="prompt__tile"></div>
+    <div class="prompt__tile"></div>
+  </div>
+  <div class="prompt__info-text">
+    Установи приложение на домашний экран своего телефона для быстрого и простого доступа к его функционалу.
+  </div>
+  <div *ngIf="data.mobileType === 'ios'" class="prompt__for-ios">
+    Нажми <img src="assets/ios-menu-btn.png" class="prompt__ios-icon"> а затем&nbsp;<span class="bold">«Добавить на главный экран»</span>
+  </div>
+  <div *ngIf="data.mobileType === 'android'" class="prompt__buttons">
+    <button class="prompt__button" mat-raised-button (click)="close()">Закрыть</button>
+    <button class="prompt__button" mat-raised-button color="primary" (click)="installPwa()">Установить</button>
+  </div>
 </div>
