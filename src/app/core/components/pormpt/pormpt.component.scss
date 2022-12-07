@@ -49,6 +49,8 @@
 
   &__for-ios {
     display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
     align-items: center;
     margin-bottom: 10px;
   }
