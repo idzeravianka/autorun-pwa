@@ -23,6 +23,14 @@ export class MqttService {
     return localStorage.getItem('mqtt_seting');
   }
 
+  public clearMqttConnectionSettings(): void {
+    localStorage.removeItem('mqtt_seting');
+
+    if (this.client) {
+      this.client.disconnect();
+    }
+  }
+
   public saveMqttSettings(settings: MqttSettings): void {
     localStorage.setItem('mqtt_seting', JSON.stringify(settings));
     this.connect();
@@ -43,6 +51,12 @@ export class MqttService {
 
   public sendCommand(command: string): void {
     const message_pub = new Message(command);
+    message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
+    this.client.send(message_pub);
+  }
+
+  public setTimer(seconds: number): void {
+    const message_pub = new Message(`timer=${seconds}`);
     message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
     this.client.send(message_pub);
   }

@@ -2,6 +2,7 @@
 @include mat.core();
 @import "colors";
 @import "node_modules/angular-notifier/styles";
+@import 'swiper/swiper-bundle.min.css';
 
 $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: white;
@@ -106,14 +107,37 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-//body {
-  //user-select: none;
-  //touch-action: none;
-//}
-
 .notifier__notification {
   width: 95%;
   height: 48px;
   display: flex;
   justify-content: center;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: $base;
+}
+
+.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 0 !important;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.button-loader:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: $base;
+  animation: spinner .8s linear infinite;
 }

@@ -50,37 +50,5 @@
     color: $prompt;
     font-size: 12px;
   }
-
-  &__control-buttons {
-    column-gap: 10px;
-  }
-
-  &__start-stop-button-wrapper {
-    width: 150px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    margin: 25px 0;
-  }
-
-  &__start-stop-title {
-    font-size: 12px;
-    line-height: 21px;
-  }
-
-  &__open-close-button-wrapper {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-evenly;
-
-    & .open-lock-button, .close-lock-button {
-      width: 65px;
-      height: 65px;
-    }
-  }
 }
 
-.stop-color ::ng-deep  .hold-button{
-  background-color: $red;
-  border: 5px solid $red-accent;
-}

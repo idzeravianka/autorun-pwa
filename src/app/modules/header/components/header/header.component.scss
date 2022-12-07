@@ -6,8 +6,18 @@
           linear-gradient(120deg,transparent 42%, $color 42%, $color 58%, transparent 58%);
 }
 
-.w {
-  width: 48px;
+.back-button {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  padding-left: 14px;
+  width: 28px;
+
+  & img {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .title {

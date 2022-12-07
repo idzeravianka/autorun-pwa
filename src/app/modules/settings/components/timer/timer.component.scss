@@ -1,0 +1,18 @@
+.timer {
+  padding: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+  height: calc(100% - 48px);
+
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &__value, &__button {
+    width: 220px;
+  }
+}

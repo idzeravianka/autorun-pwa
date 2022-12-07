@@ -4,12 +4,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
+import { AgreementDialogModule } from '../../shared/modules/agreement-dialog/agreement-dialog.module';
+import { ConnectionComponent } from './components/connection/connection.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { SettingsComponent } from './components/settings-component/settings.component';
+import { TimerComponent } from './components/timer/timer.component';
 import { SettingsRoutingModule } from './settings-routing.module';
 
 @NgModule({
   declarations: [
     SettingsComponent,
+    ConnectionComponent,
+    MenuComponent,
+    TimerComponent,
   ],
   imports: [
     CommonModule,
@@ -17,6 +24,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    AgreementDialogModule,
   ],
 })
 export class SettingsModule { }
