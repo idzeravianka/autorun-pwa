@@ -37,40 +37,54 @@
       <ng-template swiperSlide>
         <az-main-control-buttons></az-main-control-buttons>
       </ng-template>
-      <ng-template swiperSlide><div>To be continued...</div></ng-template>
+      <ng-template swiperSlide>
+        <az-action-selector></az-action-selector>
+      </ng-template>
     </swiper>
   </div>
 
   <div class="dashboard__section">
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Канал IN1</span>
     </div>
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Канал IN2</span>
     </div>
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/ignition.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Зажигание</span>
     </div>
 
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Реле K1</span>
     </div>
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Реле K4</span>
     </div>
     <div class="dashboard__sensor-data">
       <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
-      <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1 ? 'ON' : 'OFF'}}</span>
+      <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1 ? 'ON' : 'OFF'}}
+      </span>
       <span class="dashboard__sensor-prompt">Реле K5</span>
     </div>
   </div>

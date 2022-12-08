@@ -7,7 +7,7 @@
   (touchend)="onStartStopUnPressed($event)"
   (mousedown)="onStartStopPressed($event)"
   (mouseup)="onStartStopUnPressed($event)">
-  <img class="hold-button__icon" [src]="iconUrl" alt="">
+  <img class="hold-button__icon" [src]="iconUrl" *ngIf="!!iconUrl" alt="">
   <mat-spinner class="hold-button__spinner" color="primary" *ngIf="isLoading"></mat-spinner>
   <mat-progress-spinner
     *ngIf="progressPercent"
