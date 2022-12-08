@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1670446585937,
+  "timestamp": 1670491274004,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -11,14 +11,15 @@
         "ignoreVary": true
       },
       "urls": [
-        "/autorun-pwa/497.05042c8e7b551f9c.js",
-        "/autorun-pwa/662.2325eb4574bf1e53.js",
+        "/autorun-pwa/314.cbbe808d22703b0a.js",
+        "/autorun-pwa/794.b9e9b3ae6110fd89.js",
+        "/autorun-pwa/80.a15e1dee8b4ed630.js",
         "/autorun-pwa/favicon.ico",
         "/autorun-pwa/index.html",
-        "/autorun-pwa/main.8fe761b009190b22.js",
+        "/autorun-pwa/main.c0f42128b8a95c9e.js",
         "/autorun-pwa/manifest.webmanifest",
         "/autorun-pwa/polyfills.b1491a414f189971.js",
-        "/autorun-pwa/runtime.3a6851764d50ded1.js",
+        "/autorun-pwa/runtime.92e40656004e9d05.js",
         "/autorun-pwa/styles.f97e4e8732fd058d.css"
       ],
       "patterns": []
@@ -51,6 +52,7 @@
         "/autorun-pwa/assets/svg/ignition.svg",
         "/autorun-pwa/assets/svg/open-lock.svg",
         "/autorun-pwa/assets/svg/relay.svg",
+        "/autorun-pwa/assets/svg/send-command.svg",
         "/autorun-pwa/assets/svg/temperature.svg",
         "/autorun-pwa/assets/svg/timer.svg",
         "/autorun-pwa/assets/svg/voltage.svg"
@@ -60,8 +62,9 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/autorun-pwa/497.05042c8e7b551f9c.js": "a3a821f680bebeee7e60fea45ee05efc72aeb2f4",
-    "/autorun-pwa/662.2325eb4574bf1e53.js": "bcec0db1643b99ef73a6094503c3b61d443a629d",
+    "/autorun-pwa/314.cbbe808d22703b0a.js": "84b571669aa99ac8f9465f54e4d77dd71779c0ff",
+    "/autorun-pwa/794.b9e9b3ae6110fd89.js": "5ccda9101b330f39b4916239d9a6f7dff837a329",
+    "/autorun-pwa/80.a15e1dee8b4ed630.js": "0ce7c4992330e53c4c827c90de288194c02f6883",
     "/autorun-pwa/assets/icons/icon-128x128.png": "6942949e495375b55799e9fb968fa675714b1515",
     "/autorun-pwa/assets/icons/icon-144x144.png": "a55ef6356153c356be9b104acf4c88c3a7a6c233",
     "/autorun-pwa/assets/icons/icon-152x152.png": "34f4dca07a1e3d8a2a0cc161aa962d794a2ae80d",
@@ -82,15 +85,16 @@
     "/autorun-pwa/assets/svg/ignition.svg": "c82c19e1e82ec21cdd08b6c9e2e3711538996327",
     "/autorun-pwa/assets/svg/open-lock.svg": "632db411ba6af58ee90f6514ff3c19506c8d07e9",
     "/autorun-pwa/assets/svg/relay.svg": "452e615a505ce358d4b43efebd7625dde0e71cb0",
+    "/autorun-pwa/assets/svg/send-command.svg": "754df52cb992019dc635ea592c32fef1274ac9d8",
     "/autorun-pwa/assets/svg/temperature.svg": "9441df4e21e70a221b13604e427dc6280dc27c43",
     "/autorun-pwa/assets/svg/timer.svg": "a6d780a45d47c0ef324e1e2b0e19ec65f877d00a",
     "/autorun-pwa/assets/svg/voltage.svg": "a5bb27346ecb3cb8f9de541c754e3363602fd6f0",
     "/autorun-pwa/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/autorun-pwa/index.html": "e75df3440782c7dbf5cbd584d4f38b1c55b8b7ef",
-    "/autorun-pwa/main.8fe761b009190b22.js": "53dc5127cbc11dc368a302257e0b53ad4a0f65fb",
+    "/autorun-pwa/index.html": "83b9df00ffdb261f3853c066a6cc5e0b2a9af2c1",
+    "/autorun-pwa/main.c0f42128b8a95c9e.js": "5ddd6add9ff32678dfc4ccf6cf7b8d67cf6e8632",
     "/autorun-pwa/manifest.webmanifest": "f835e5a8123564f29d73c15a0fffb14e05f93c3a",
     "/autorun-pwa/polyfills.b1491a414f189971.js": "0c2240b6761c083ec18dd795ff1a38f147f14ed5",
-    "/autorun-pwa/runtime.3a6851764d50ded1.js": "f91d7e1938f14fcad37b40c2447492c1e536f963",
+    "/autorun-pwa/runtime.92e40656004e9d05.js": "c74ad4e4e7a11f0363cccc4f655b598854cb9cd5",
     "/autorun-pwa/styles.f97e4e8732fd058d.css": "380b7580915327f1a1f06084558d81a297df26ae"
   },
   "navigationUrls": [
