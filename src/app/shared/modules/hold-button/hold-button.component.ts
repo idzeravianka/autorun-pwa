@@ -25,6 +25,10 @@ export class HoldButtonComponent {
   public onStartStopPressed(e: Event): void {
     if (e.cancelable) e.preventDefault();
     if (this.disabled) return;
+    if (this.holdTime === 0) {
+      this.holdTimeEnd.emit();
+      return;
+    }
     this.progressTimerId = setInterval(() => {
       this.progressPercent += this.calculateIncrement();
     }, this.progressTimer);

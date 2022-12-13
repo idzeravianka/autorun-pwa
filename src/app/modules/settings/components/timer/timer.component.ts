@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { MatSliderChange } from '@angular/material/slider';
 import { NotifierService } from 'angular-notifier';
 import { skip, take } from 'rxjs';
 
 import { MqttService } from '../../../../core/services/mqtt.service';
+
+const defaultTimerValue = 10;
 
 @Component({
   selector: 'az-timer',
@@ -11,20 +13,18 @@ import { MqttService } from '../../../../core/services/mqtt.service';
   styleUrls: ['./timer.component.scss'],
 })
 export class TimerComponent {
-  public form: FormGroup;
+  public timerValue: number = defaultTimerValue;
   public isLoading: boolean;
 
-  constructor(private mqttService: MqttService, private notifier: NotifierService) {
-    this.form = new FormGroup({
-      timer: new FormControl(null),
-    });
+  constructor(private mqttService: MqttService, private notifier: NotifierService) {}
+
+  public updateTimerValue(change: MatSliderChange): void {
+    this.timerValue = change.value as number;
   }
 
   public saveTimer(): void {
-    // const secAtMin = 60;
-    const timeInSeconds = Number(this.form.value.timer);
     this.isLoading = true;
-    this.mqttService.setTimer(timeInSeconds);
+    this.mqttService.setTimer(this.timerValue);
     this.mqttService.sensorsData$.pipe(
       skip(1),
       take(1),

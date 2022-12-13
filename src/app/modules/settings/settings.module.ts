@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AgreementDialogModule } from '../../shared/modules/agreement-dialog/agreement-dialog.module';
 import { ConnectionComponent } from './components/connection/connection.component';
@@ -25,6 +26,8 @@ import { SettingsRoutingModule } from './settings-routing.module';
     MatButtonModule,
     ReactiveFormsModule,
     AgreementDialogModule,
+    MatSliderModule,
+    FormsModule,
   ],
 })
 export class SettingsModule { }

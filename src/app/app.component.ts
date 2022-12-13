@@ -16,5 +16,6 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this.mqttService.connect();
+    this.mqttService.setTimerData();
   }
 }

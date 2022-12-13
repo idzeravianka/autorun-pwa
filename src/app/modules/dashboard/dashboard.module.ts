@@ -10,6 +10,7 @@ import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { SwiperModule } from 'swiper/angular';
 
 import { HoldButtonModule } from '../../shared/modules/hold-button/hold-button.module';
+import { ToTimeModule } from '../../shared/pipes/to-time/to-time.module';
 import { ActionSelectorComponent } from './components/action-selector/action-selector.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MainControlButtonsComponent } from './components/main-control-buttons/main-control-buttons.component';
@@ -34,6 +35,7 @@ SwiperCore.use([Navigation, Pagination]);
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
+    ToTimeModule,
   ],
 })
 export class DashboardModule { }

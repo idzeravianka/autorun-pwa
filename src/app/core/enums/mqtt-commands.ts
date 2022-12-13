@@ -16,6 +16,7 @@ export enum MqttCommands {
   StarterCrankTime1Sec = 'starter=1000',
   StarterCrankTime2And5Sec = 'starter=2500',
   StarterCrankTime4Sec = 'starter=4000',
+  Update = 'update',
   WiFiOn = 'wifion',
   Reboot = 'reboot',
 }

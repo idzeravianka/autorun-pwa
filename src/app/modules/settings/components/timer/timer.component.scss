@@ -12,7 +12,13 @@
     font-weight: bold;
   }
 
-  &__value, &__button {
+  &__slider, &__button {
     width: 220px;
+  }
+
+  &__slider ::ng-deep {
+    & .mat-slider-horizontal, .mat-slider-track-fill, .mat-slider-track-background, .mat-slider-track-wrapper, .mat-slider-wrapper {
+      height: 3px;
+    }
   }
 }

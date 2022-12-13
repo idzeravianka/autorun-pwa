@@ -2,22 +2,34 @@
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  delay,
+  filter,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 
+import { AutoCloseable } from '../classes/auto-closable';
+import { TimeStatuses } from '../enums/time-statuses';
 import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
 import { MqttSettings } from '../interfaces/mqtt-settings';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MqttService {
+export class MqttService extends AutoCloseable {
   public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = new BehaviorSubject<MqttSensorsDataResponse | null>(null);
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   private client: Client;
   private mqttSettings: MqttSettings;
+  private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private notifier: NotifierService) {}
+  constructor(private notifier: NotifierService) {
+    super();
+  }
 
   public getMqttSavedSettings(): string | null {
     return localStorage.getItem('mqtt_seting');
@@ -47,6 +59,17 @@ export class MqttService {
     if (!this.mqttSettings) {
       return;
     }
+  }
+
+  public setTimerData(): void {
+    this.sensorsData$.pipe(
+      filter<MqttSensorsDataResponse | null>(Boolean),
+      takeUntil(this.destroyedSource),
+    ).subscribe(sensorsData => {
+      this.timerData$.next(sensorsData?.time?.[TimeStatuses.Timer] || 0);
+      this.destroyedTimerSource$.next(true);
+      this.updateTimer();
+    });
   }
 
   public sendCommand(command: string): void {
@@ -101,5 +124,16 @@ export class MqttService {
       onSuccess: this.onConnect,
       onFailure: this.onFailure,
     };
+  }
+
+  private updateTimer(): void {
+    const oneSecond = 1000;
+    this.timerData$.pipe(
+      delay(oneSecond),
+      filter(timerData => timerData > 0),
+      takeUntil(this.destroyedTimerSource$),
+    ).subscribe(v => {
+      this.timerData$.next(--v);
+    });
   }
 }
