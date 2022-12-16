@@ -100,10 +100,15 @@ export class MqttService extends AutoCloseable {
   };
 
   private onConnectionLost = (resObject: MQTTError) => {
+    const connectionLostCodes = [7, 8];
+    if (connectionLostCodes.includes(resObject.errorCode)) {
+      this.connect();
+      return;
+    }
     if (resObject.errorCode !== 0) {
-      this.notifier.notify('warning', `${resObject.errorCode}`);
+      this.notifier.notify('warning', `${resObject.errorCode}:${resObject.errorMessage}`);
     } else {
-      this.notifier.notify('error', resObject.errorMessage);
+      this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
     }
   };
 
@@ -113,7 +118,7 @@ export class MqttService extends AutoCloseable {
   };
 
   private onFailure = (message: ErrorWithInvocationContext) => {
-    this.notifier.notify('error', message.errorMessage);
+    this.notifier.notify('error', `${message.errorCode}:${message.errorMessage}`);
   };
 
   private getConnectionOptions(): ConnectionOptions {
