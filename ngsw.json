@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1671456860529,
+  "timestamp": 1671457284982,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -198,7 +198,7 @@
     "/autorun-pwa/assets/svg/timer.svg": "a6d780a45d47c0ef324e1e2b0e19ec65f877d00a",
     "/autorun-pwa/assets/svg/voltage.svg": "a5bb27346ecb3cb8f9de541c754e3363602fd6f0",
     "/autorun-pwa/common.3a13e101aacf81d8.js": "5f22ccc407e770c854526c5ede95e0a0d010715b",
-    "/autorun-pwa/index.html": "052226808d3331c02b6d4e1785d974c347c55202",
+    "/autorun-pwa/index.html": "4b59c7cc8d917ba577ca37140d58a80a019e7f3f",
     "/autorun-pwa/main.98903c4021252823.js": "d6b6b0c9e99342eda8648860eff9086a5a47c55d",
     "/autorun-pwa/manifest.webmanifest": "d04d9e02611b90e5a75dd6b2a6d460e8d4cab70b",
     "/autorun-pwa/polyfills-core-js.aae6b5d519b4cdc7.js": "e6fb2e72255d987bc5dc500fb064261c793716a4",
