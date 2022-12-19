@@ -1,4 +1,4 @@
-<ion-content [scrollY]="false">
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="updateSensorsData($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -15,7 +15,7 @@
         </div>
         <ion-popover #popover [isOpen]="isTimerSettingOpen" (didDismiss)="toggleTimerSettingPopover(false)">
           <ng-template>
-            <ion-content [scrollY]="false" class="dashboard__popover">
+            <ion-content class="dashboard__popover">
               <div class="dashboard__popover-title">Минут: {{timerValue}}</div>
               <ion-range (ionChange)="onRangeChange($event)" [min]="0" [max]="60" [snaps]="true" [ticks]="true" [step]="5"></ion-range>
               <ion-button class="dashboard__popover-button ion-text-center" (click)="saveTimer()">
