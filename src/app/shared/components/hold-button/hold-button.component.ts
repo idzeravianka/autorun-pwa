@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { CircleProgressComponent } from 'ng-circle-progress';
 
 @Component({
   selector: 'az-hold-button',
@@ -13,9 +14,13 @@ export class HoldButtonComponent {
 
   @Output() holdTimeEnd: EventEmitter<null> = new EventEmitter<null>();
 
+  @ViewChild('progressbar') progressBarEl: CircleProgressComponent;
+
   public isButtonPressed: boolean;
 
   private pressedTimerId: any;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   public onStartStopPressed(e: Event): void {
     if (e.cancelable) e.preventDefault();
@@ -26,6 +31,7 @@ export class HoldButtonComponent {
     }
     const multiplier = 1000;
     this.isButtonPressed = true;
+    this.cdr.detectChanges();
     this.pressedTimerId = setTimeout(() => {
       this.holdTimeEnd.emit();
       this.isButtonPressed = false;

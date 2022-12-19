@@ -1,5 +1,6 @@
 @import "node_modules/angular-notifier/styles";
 @import "theme/colors";
+@import 'swiper/swiper-bundle.min.css';
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -76,7 +77,6 @@ table {
 * {
   font-family: Roboto, sans-serif;
   text-transform: unset;
-  color: $black;
 }
 
 /* RESET CSS End */
@@ -96,4 +96,17 @@ table {
     flex-flow: column;
     justify-content: flex-end;
   }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: $base;
+}
+
+.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 0 !important;
+}
+
+// ion-modal hack for dark theme start
+ion-modal {
+  color: $black;
 }

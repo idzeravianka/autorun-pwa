@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { HoldButtonComponent } from './hold-button.component';
 
@@ -11,6 +12,7 @@ import { HoldButtonComponent } from './hold-button.component';
   imports: [
     CommonModule,
     IonicModule,
+    NgCircleProgressModule,
   ],
   exports: [
     HoldButtonComponent,

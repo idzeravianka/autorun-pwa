@@ -1,7 +1,24 @@
-<div
+<circle-progress
+  #progressbar
   *ngIf="isButtonPressed"
   class="progressbar"
-  [style]="'--value:'+holdTime+'s'"></div>
+  [percent]="100"
+  [radius]="progressBarEl?.['elRef']?.nativeElement?.offsetWidth ? progressBarEl['elRef'].nativeElement.offsetWidth / 2 : 0"
+  [outerStrokeWidth]="5"
+  [innerStrokeWidth]="5"
+  [space]="-5"
+  [innerStrokeColor]="'#def'"
+  [outerStrokeColor]="'#369'"
+  [animation]="true"
+  [animationDuration]="holdTime * 1000"
+  [showTitle]="false"
+  [showSubtitle]="false"
+  [showUnits]="false"
+  [showImage]="false"
+  [showBackground]="false"
+  [backgroundPadding]="0"
+  [backgroundStrokeWidth]="0"
+></circle-progress>
 <ion-button
   class="hold-button"
   shape="round"

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { SwiperModule } from 'swiper/angular';
 
 import { HeaderModule } from '../header/header.module';
 import { HoldButtonModule } from '../shared/components/hold-button/hold-button.module';
@@ -10,6 +12,8 @@ import { ActionSelectorComponent } from './action-selector/action-selector.compo
 import { HomePageRoutingModule } from './home-routing.module';
 import { HomePageComponent } from './home.page';
 import { MainControlButtonsComponent } from './main-control-buttons/main-control-buttons.component';
+
+SwiperCore.use([Navigation, Pagination]);
 
 @NgModule({
   imports: [
@@ -20,6 +24,7 @@ import { MainControlButtonsComponent } from './main-control-buttons/main-control
     HeaderModule,
     ToTimeModule,
     HoldButtonModule,
+    SwiperModule,
   ],
   declarations: [HomePageComponent, MainControlButtonsComponent, ActionSelectorComponent],
 })

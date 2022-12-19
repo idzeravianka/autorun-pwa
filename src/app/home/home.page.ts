@@ -28,10 +28,6 @@ export class HomePageComponent {
   public isTimerSettingOpen: boolean;
   public timerValue: number = 0;
   public timerData$:  BehaviorSubject<number> = this.mqttService.timerData$;
-  public sliderOptions: any = {
-    loop: true,
-    direction: 'horizontal',
-  };
 
   constructor(private mqttService: MqttService, private notifier: NotifierService) {}
 

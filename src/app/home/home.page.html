@@ -92,10 +92,14 @@
     </div>
 
     <div class="dashboard__section">
-      <ion-slides [options]="sliderOptions" [pager]="true">
-        <ion-slide><az-main-control-buttons></az-main-control-buttons></ion-slide>
-        <ion-slide><az-action-selector></az-action-selector></ion-slide>
-      </ion-slides>
+      <swiper direction="horizontal" [loop]=true [pagination]="true">
+        <ng-template swiperSlide>
+          <az-main-control-buttons></az-main-control-buttons>
+        </ng-template>
+        <ng-template swiperSlide>
+          <az-action-selector></az-action-selector>
+        </ng-template>
+      </swiper>
     </div>
 
     <div class="dashboard__update-time">
