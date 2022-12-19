@@ -1,10 +1,14 @@
 <div class="prompt">
-  <button class="prompt__close" mat-button color="primary" (click)="close()"><mat-icon>close</mat-icon></button>
-  <div class="prompt__title">Установи приложение</div>
+  <div class="prompt__title">
+    <span>Установи приложение</span>
+    <ion-button *ngIf="data.mobileType === 'ios'" fill="outline" class="prompt__close" (click)="close()">
+      X
+    </ion-button>
+  </div>
   <div class="prompt__tiles">
     <div class="prompt__tile"></div>
     <div class="prompt__tile"></div>
-    <img class="prompt__tile" src="assets/icons/icon-512x512.png">
+    <img class="prompt__tile" src="assets/icons/icon-512x512.png" alt="">
     <div class="prompt__tile"></div>
     <div class="prompt__tile"></div>
   </div>
@@ -12,10 +16,10 @@
     Установи приложение на домашний экран своего телефона для быстрого и простого доступа к его функционалу.
   </div>
   <div *ngIf="data.mobileType === 'ios'" class="prompt__for-ios">
-    Нажми <img src="assets/ios-menu-btn.png" class="prompt__ios-icon"> а затем&nbsp;<span class="bold">«Добавить на главный экран»</span>
+    Нажми <img src="assets/ios-menu-btn.png" class="prompt__ios-icon" alt=""> а затем&nbsp;<span class="bold">«Добавить на главный экран»</span>
   </div>
   <div *ngIf="data.mobileType === 'android'" class="prompt__buttons">
-    <button class="prompt__button" mat-raised-button (click)="close()">Закрыть</button>
-    <button class="prompt__button" mat-raised-button color="primary" (click)="installPwa()">Установить</button>
+    <ion-button fill="outline" class="prompt__button" (click)="close()">Закрыть</ion-button>
+    <ion-button class="prompt__button" (click)="installPwa()">Установить</ion-button>
   </div>
 </div>

@@ -1,0 +1,112 @@
+<ion-content [scrollY]="false">
+  <ion-refresher slot="fixed" (ionRefresh)="updateSensorsData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="dashboard">
+    <div class="dashboard__section">
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/voltage.svg" alt="Voltage">
+        <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.pin?.[pinStatuses.Voltage] || '--'}} V</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <div class="dashboard__sensor-data" (click)="toggleTimerSettingPopover(true, $event)">
+          <img class="dashboard__sensor-icon" src="assets/svg/timer.svg">
+          <span class="dashboard__sensor-label">{{(timerData$ | async) | toTime}}</span>
+        </div>
+        <ion-popover #popover [isOpen]="isTimerSettingOpen" (didDismiss)="toggleTimerSettingPopover(false)">
+          <ng-template>
+            <ion-content [scrollY]="false" class="dashboard__popover">
+              <div class="dashboard__popover-title">Минут: {{timerValue}}</div>
+              <ion-range (ionChange)="onRangeChange($event)" [min]="0" [max]="60" [snaps]="true" [ticks]="true" [step]="5"></ion-range>
+              <ion-button class="dashboard__popover-button ion-text-center" (click)="saveTimer()">
+                <ion-spinner *ngIf="isTimerSetInProgress"></ion-spinner>
+                <span *ngIf="!isTimerSetInProgress">Установить</span>
+              </ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/counter.svg">
+        <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.time?.[timeStatuses.Count] || '--.--'}}</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp1] || '--'}} °</span>
+        <span class="dashboard__sensor-prompt">Датчик №1</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp2] || '--'}} °</span>
+        <span class="dashboard__sensor-prompt">Датчик №2</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp3] || '--'}} °</span>
+        <span class="dashboard__sensor-prompt">Датчик №3</span>
+      </div>
+
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Канал IN1</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Канал IN2</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/ignition.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Зажигание</span>
+      </div>
+
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Реле K1</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Реле K4</span>
+      </div>
+      <div class="dashboard__sensor-data">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1">
+        {{(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1 ? 'ON' : 'OFF'}}
+      </span>
+        <span class="dashboard__sensor-prompt">Реле K5</span>
+      </div>
+    </div>
+
+    <div class="dashboard__section">
+      <ion-slides [options]="sliderOptions" [pager]="true">
+        <ion-slide><az-main-control-buttons></az-main-control-buttons></ion-slide>
+        <ion-slide><az-action-selector></az-action-selector></ion-slide>
+      </ion-slides>
+    </div>
+
+    <div class="dashboard__update-time">
+      <span *ngIf="!!(updateTime$ | async)">Обновлено в: {{updateTime$ | async}}</span>
+<!--      <az-hold-button-->
+<!--        class="reload-icon-wrapper"-->
+<!--        *ngIf="!!(updateTime$ | async)"-->
+<!--        [holdTime]="0"-->
+<!--        (holdTimeEnd)="updateSensorsData()">-->
+<!--        <div class="reload-icon" [class.reload-icon-spin]="isUpdateInProgress"></div>-->
+<!--      </az-hold-button>-->
+    </div>
+  </div>
+</ion-content>

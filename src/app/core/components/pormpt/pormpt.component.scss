@@ -1,4 +1,4 @@
-@import "colors";
+@import "../../../../theme/colors";
 
 .prompt {
   display: flex;
@@ -6,16 +6,26 @@
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  background-color: $white;
+  padding: 15px 0;
 
   &__close {
     position: absolute;
-    right: 0;
-    top: 0;
+    width: 30px;
+    height: 30px;
+    right: 5px;
+    top: -75%;
+    font-size: 14px;
   }
 
   &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     font-size: 16px;
     font-weight: bold;
+    position: relative;
   }
 
   &__tiles {
@@ -25,7 +35,8 @@
   }
 
   &__tile {
-    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
     height: 80px;
     margin: 15px 5px;
     border-radius: 15px;
@@ -39,7 +50,7 @@
 
   &__button {
     margin-bottom: 5px;
-    width: 110px;
+    width: 140px;
   }
 
   &__info-text {

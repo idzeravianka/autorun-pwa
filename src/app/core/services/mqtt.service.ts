@@ -23,7 +23,9 @@ export class MqttService extends AutoCloseable {
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
 
+  // @ts-ignore
   private client: Client;
+  // @ts-ignore
   private mqttSettings: MqttSettings;
   private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
 

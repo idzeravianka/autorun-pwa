@@ -1,0 +1,19 @@
+<div
+  *ngIf="isButtonPressed"
+  class="progressbar"
+  [style]="'--value:'+holdTime+'s'"></div>
+<ion-button
+  class="hold-button"
+  shape="round"
+  [class.disabled]="this.disabled"
+  [disabled]="this.disabled"
+  (touchstart)="onStartStopPressed($event)"
+  (touchend)="onStartStopUnPressed($event)"
+  (mousedown)="onStartStopPressed($event)"
+  (mouseup)="onStartStopUnPressed($event)">
+  <div class="hold-button__wrapper">
+    <ion-spinner *ngIf="isLoading" class="hold-button__spinner" name="crescent"></ion-spinner>
+    <img class="hold-button__icon" [src]="iconUrl" *ngIf="!!iconUrl" alt="">
+    <ng-content></ng-content>
+  </div>
+</ion-button>

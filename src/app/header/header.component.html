@@ -1,0 +1,16 @@
+<ion-header>
+      <div class="header-wrapper">
+        <div class="back-button">
+          <ion-back-button *ngIf="!(isCoreRoute$ | async)"  color="light" text="Назад" (click)="navigationBack()"></ion-back-button>
+        </div>
+<!--        <div class="back-button"><img *ngIf="!(isCoreRoute$ | async)" src="assets/svg/back.svg" (click)="navigationBack()"></div>-->
+        <div class="title">Анантомия автозапуска</div>
+        <div class="gears-container">
+          <div
+            class="gear-rotate"
+            [ngClass]="{'setting-open-animation': (isSettingsOpen$ | async), 'setting-close-animation': !(isSettingsOpen$ | async)}"
+            (click)="navigateToSettings()"
+            [routerLinkActive]="'gear-animate'"></div>
+        </div>
+      </div>
+</ion-header>

@@ -1,20 +1,20 @@
-@media screen and (min-width: 576px) {
-  :host {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 575px;
-    overflow: hidden;
-    box-shadow: 0 0 40px 25px rgba(0, 0, 0, 0.2);
-  }
-}
-@media screen and (max-width: 575px) {
-  :host {
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-}
+//@media screen and (min-width: 576px) {
+//  :host {
+//    display: block;
+//    position: absolute;
+//    top: 50%;
+//    left: 50%;
+//    transform: translate(-50%, -50%);
+//    width: 575px;
+//    overflow: hidden;
+//    box-shadow: 0 0 40px 25px rgba(0, 0, 0, 0.2);
+//  }
+//}
+//@media screen and (max-width: 575px) {
+//  :host {
+//    display: block;
+//    width: 100vw;
+//    height: 100vh;
+//    overflow: hidden;
+//  }
+//}

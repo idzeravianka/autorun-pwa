@@ -1,7 +1,6 @@
-import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { take, timer } from 'rxjs';
+import { ModalController, Platform } from '@ionic/angular';
+import { Subject, take, timer } from 'rxjs';
 
 import { PormptComponent } from '../components/pormpt/pormpt.component';
 
@@ -10,21 +9,22 @@ import { PormptComponent } from '../components/pormpt/pormpt.component';
 })
 export class PwaPromptService {
   private promptEvent: any;
+  private dismiss$: Subject<void> = new Subject<void>();
 
   constructor(
-    private bottomSheet: MatBottomSheet,
+    private modalController: ModalController,
     private platform: Platform,
   ) { }
 
   public initPwaPrompt() {
-    if (this.platform.ANDROID) {
+    if (this.platform.is('android')) {
       window.addEventListener('beforeinstallprompt', (event: any) => {
         event.preventDefault();
         this.promptEvent = event;
         this.openPromptComponent('android');
       });
     }
-    if (this.platform.IOS) {
+    if (this.platform.is('ios')) {
       // @ts-ignore
       const isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator['standalone']);
       if (!isInStandaloneMode) {
@@ -37,6 +37,20 @@ export class PwaPromptService {
     const debounce = 3000;
     timer(debounce)
       .pipe(take(1))
-      .subscribe(() => this.bottomSheet.open(PormptComponent, { data: { mobileType, promptEvent: this.promptEvent } }));
+      .subscribe(async () => {
+        const modal = await this.modalController.create({
+          component: PormptComponent,
+          componentProps: { data: { mobileType, dismiss$: this.dismiss$, promptEvent: this.promptEvent } },
+          cssClass: 'prompt-modal',
+        });
+
+        await modal.present();
+
+        this.dismiss$.pipe(
+          take(1),
+        ).subscribe(async () => {
+          await modal.dismiss();
+        });
+      });
   }
 }

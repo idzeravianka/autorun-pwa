@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'az-pormpt',
@@ -7,10 +8,11 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
   styleUrls: ['./pormpt.component.scss'],
 })
 export class PormptComponent {
-  constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { mobileType: 'ios' | 'android'; promptEvent?: any },
-    private bottomSheetRef: MatBottomSheetRef<PormptComponent>,
-  ) {}
+  @ViewChild(IonModal) modal: IonModal;
+
+  public data: { mobileType: 'ios' | 'android'; dismiss$: Subject<void>; promptEvent?: any };
+
+  constructor() {}
 
   public installPwa(): void {
     this.data.promptEvent.prompt();
@@ -18,6 +20,6 @@ export class PormptComponent {
   }
 
   public close() {
-    this.bottomSheetRef.dismiss();
+    this.data.dismiss$.next();
   }
 }
