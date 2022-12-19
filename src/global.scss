@@ -1,4 +1,5 @@
 @import "node_modules/angular-notifier/styles";
+@import "theme/colors";
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -75,6 +76,7 @@ table {
 * {
   font-family: Roboto, sans-serif;
   text-transform: unset;
+  color: $black;
 }
 
 /* RESET CSS End */
