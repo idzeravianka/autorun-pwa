@@ -6,6 +6,9 @@ import { MqttService } from './core/services/mqtt.service';
   selector: 'az-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  host: {
+    '(document:visibilitychange)': 'onVisibilityChange()',
+  },
 })
 export class AppComponent implements OnInit {
   constructor(private mqttService: MqttService) {}
@@ -13,5 +16,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.mqttService.connect();
     this.mqttService.setTimerData();
+  }
+
+  public onVisibilityChange(): void {
+    if (document.visibilityState === 'visible') {
+      this.mqttService.checkIfAppInitAndUpdateSensorsData();
+    }
   }
 }

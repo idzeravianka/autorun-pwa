@@ -29,8 +29,19 @@ export class MqttService extends AutoCloseable {
   private mqttSettings: MqttSettings;
   private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
 
+  private isAlreadyAppInit: boolean;
+
   constructor(private notifier: NotifierService) {
     super();
+  }
+
+  public checkIfAppInitAndUpdateSensorsData(): void {
+    if (!this.isAlreadyAppInit) {
+      this.isAlreadyAppInit = true;
+      return;
+    }
+
+    this.connect();
   }
 
   public getMqttSavedSettings(): string | null {
@@ -102,11 +113,11 @@ export class MqttService extends AutoCloseable {
   };
 
   private onConnectionLost = (resObject: MQTTError) => {
-    const connectionLostCodes = [7, 8];
-    if (connectionLostCodes.includes(resObject.errorCode)) {
-      this.connect();
-      return;
-    }
+    // const connectionLostCodes = [7, 8];
+    // if (connectionLostCodes.includes(resObject.errorCode)) {
+    //   this.connect();
+    //   return;
+    // }
     if (resObject.errorCode !== 0) {
       this.notifier.notify('warning', `${resObject.errorCode}:${resObject.errorMessage}`);
     } else {
