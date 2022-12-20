@@ -29,17 +29,17 @@ export class MqttService extends AutoCloseable {
   private mqttSettings: MqttSettings;
   private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
 
-  private isAlreadyAppInit: boolean;
+  // private isAlreadyAppInit: boolean;
 
   constructor(private notifier: NotifierService) {
     super();
   }
 
   public checkIfAppInitAndUpdateSensorsData(): void {
-    if (!this.isAlreadyAppInit) {
-      this.isAlreadyAppInit = true;
-      return;
-    }
+    // if (!this.isAlreadyAppInit) {
+    //   this.isAlreadyAppInit = true;
+    //   return;
+    // }
 
     this.connect();
   }
