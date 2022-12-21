@@ -6,6 +6,7 @@ import { MqttService } from './core/services/mqtt.service';
   selector: 'az-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '(document:visibilitychange)': 'onVisibilityChange()',
   },
@@ -14,13 +15,15 @@ export class AppComponent implements OnInit {
   constructor(private mqttService: MqttService) {}
 
   ngOnInit() {
+    this.mqttService.checkAppVersion();
+    this.mqttService.listenInternetConnection();
     this.mqttService.connect();
     this.mqttService.setTimerData();
   }
 
   public onVisibilityChange(): void {
     if (document.visibilityState === 'visible') {
-      this.mqttService.checkIfAppInitAndUpdateSensorsData();
+      this.mqttService.updateSensorsData();
     }
   }
 }

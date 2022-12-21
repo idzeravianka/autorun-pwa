@@ -3,7 +3,7 @@
     <div class="small-button">
       <az-hold-button
         [isLoading]="isFanOnExecuting"
-        [disabled]="isFanOnExecuting || !(sensorsData$ | async)"
+        [disabled]="isFanOnExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
         [iconUrl]="'assets/svg/fan-on.svg'"
         [holdTime]="1"
         (holdTimeEnd)="fanOn()">
@@ -12,7 +12,7 @@
     <div class="small-button">
       <az-hold-button
         [isLoading]="isFanOffExecuting"
-        [disabled]="isFanOffExecuting || !(sensorsData$ | async)"
+        [disabled]="isFanOffExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
         [iconUrl]="'assets/svg/fan-off.svg'"
         [holdTime]="1"
         (holdTimeEnd)="fanOff()">
@@ -23,7 +23,7 @@
     <az-hold-button
       [class.stop-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 && !isStartStopExecuting"
       [isLoading]="isStartStopExecuting"
-      [disabled]="isStartStopExecuting || !(sensorsData$ | async)"
+      [disabled]="isStartStopExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
       [iconUrl]="'assets/svg/car.svg'"
       [holdTime]="1.5"
       (holdTimeEnd)="startStopEngine()">
@@ -36,7 +36,7 @@
     <div class="small-button">
       <az-hold-button
         [isLoading]="isOpenLockExecuting"
-        [disabled]="isOpenLockExecuting || !(sensorsData$ | async)"
+        [disabled]="isOpenLockExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
         [iconUrl]="'assets/svg/open-lock.svg'"
         [holdTime]="1"
         (holdTimeEnd)="openLock()">
@@ -45,7 +45,7 @@
     <div class="small-button">
       <az-hold-button
         [isLoading]="isCloseLockExecuting"
-        [disabled]="isCloseLockExecuting || !(sensorsData$ | async)"
+        [disabled]="isCloseLockExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
         [iconUrl]="'assets/svg/close-lock.svg'"
         [holdTime]="1"
         (holdTimeEnd)="closeLock()">

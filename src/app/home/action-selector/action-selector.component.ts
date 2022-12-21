@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { filter, skip, take } from 'rxjs';
+import { BehaviorSubject, filter, skip, take } from 'rxjs';
 
 import { MqttCommands } from '../../core/enums/mqtt-commands';
 import { MqttSensorsDataResponse } from '../../core/interfaces/mqtt-sensors-data-response';
@@ -27,6 +27,7 @@ const actions: { value: string; viewValue: string }[] = [
   styleUrls: ['./action-selector.component.scss'],
 })
 export class ActionSelectorComponent {
+  public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
   public actions: { value: string; viewValue: string }[] = actions;
   public selectedAction = actions[0].value;
   public isLoading: boolean;

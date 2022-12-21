@@ -1,15 +1,18 @@
 /* eslint-disable no-magic-numbers */
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 import { NotifierService } from 'angular-notifier';
 import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
 import {
   BehaviorSubject,
   delay,
   filter,
+  fromEvent,
   Subject,
   takeUntil,
 } from 'rxjs';
 
+import { WINDOW_OBJECT } from '../../app.module';
 import { AutoCloseable } from '../classes/auto-closable';
 import { TimeStatuses } from '../enums/time-statuses';
 import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
@@ -22,25 +25,56 @@ export class MqttService extends AutoCloseable {
   public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = new BehaviorSubject<MqttSensorsDataResponse | null>(null);
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public hasInternetConnection$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  // @ts-ignore
   private client: Client;
-  // @ts-ignore
   private mqttSettings: MqttSettings;
   private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
 
-  // private isAlreadyAppInit: boolean;
-
-  constructor(private notifier: NotifierService) {
+  constructor(
+    private notifier: NotifierService,
+    @Inject(WINDOW_OBJECT) private window: Window,
+    private swUpdate: SwUpdate,
+  ) {
     super();
   }
 
-  public checkIfAppInitAndUpdateSensorsData(): void {
-    // if (!this.isAlreadyAppInit) {
-    //   this.isAlreadyAppInit = true;
-    //   return;
-    // }
+  public checkAppVersion(): void {
+    this.swUpdate.versionUpdates.subscribe((event) => {
+      switch (event.type) {
+        case 'VERSION_READY':
+          this.swUpdate.activateUpdate().then(() => {
+            this.window.location.reload();
+          });
+          break;
+      }
+    });
+  }
 
+  public listenInternetConnection(): void {
+    const isOnline = this.window.navigator.onLine;
+    this.hasInternetConnection$.next(isOnline);
+
+    if (!isOnline) {
+      this.notifier.notify('warning', ' Интернет соединение отсутствует');
+    }
+
+    fromEvent(this.window, 'online').pipe(
+      takeUntil(this.destroyedSource),
+    ).subscribe(() => {
+      this.hasInternetConnection$.next(true);
+      this.notifier.notify('success', 'Интернет соединение установлено');
+      this.connect();
+    });
+    fromEvent(this.window, 'offline').pipe(
+      takeUntil(this.destroyedSource),
+    ).subscribe(() => {
+      this.hasInternetConnection$.next(false);
+      this.notifier.notify('warning', ' Интернет соединение потеряно');
+    });
+  }
+
+  public updateSensorsData(): void {
     this.connect();
   }
 
@@ -105,7 +139,7 @@ export class MqttService extends AutoCloseable {
   }
 
   private onConnect = () => {
-    this.notifier.notify('success', 'Соединение установлено');
+    this.notifier.notify('success', 'Соединение с авто установлено');
     this.client.subscribe(`${this.mqttSettings.topic}/pub`);
     const message_pub = new Message('update');
     message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
@@ -113,16 +147,7 @@ export class MqttService extends AutoCloseable {
   };
 
   private onConnectionLost = (resObject: MQTTError) => {
-    // const connectionLostCodes = [7, 8];
-    // if (connectionLostCodes.includes(resObject.errorCode)) {
-    //   this.connect();
-    //   return;
-    // }
-    if (resObject.errorCode !== 0) {
-      this.notifier.notify('warning', `${resObject.errorCode}:${resObject.errorMessage}`);
-    } else {
-      this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
-    }
+    this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
   };
 
   private onMessageArrived = (message: Message) => {

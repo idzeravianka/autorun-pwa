@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule, APP_INITIALIZER, InjectionToken } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -14,6 +15,8 @@ import { customNotifierOptions } from './core/configs/notification-config';
 import { PwaPromptService } from './core/services/pwa-prompt.service';
 import { HeaderModule } from './header/header.module';
 
+export const WINDOW_OBJECT = new InjectionToken<string>('WindowObject');
+
 const initializer = (pwaService: PwaPromptService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
@@ -23,6 +26,7 @@ const initializer = (pwaService: PwaPromptService) => () => pwaService.initPwaPr
     IonicModule.forRoot(),
     AppRoutingModule,
     CommonModule,
+    HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: true,
@@ -36,6 +40,7 @@ const initializer = (pwaService: PwaPromptService) => () => pwaService.initPwaPr
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: APP_INITIALIZER, useFactory: initializer, deps: [PwaPromptService], multi: true },
+    { provide: WINDOW_OBJECT, useValue: window },
   ],
   bootstrap: [AppComponent],
 })

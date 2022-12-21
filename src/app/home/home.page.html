@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="updateSensorsData($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="updateSensorsData($event)" [disabled]="!(hasInternetConnection$ | async)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <div class="dashboard">
@@ -10,7 +10,7 @@
       </div>
       <div class="dashboard__sensor-data">
         <div class="dashboard__sensor-data" (click)="toggleTimerSettingPopover(true, $event)">
-          <img class="dashboard__sensor-icon" src="assets/svg/timer.svg">
+          <img class="dashboard__sensor-icon" src="assets/svg/timer.svg" alt="">
           <span class="dashboard__sensor-label">{{(timerData$ | async) | toTime}}</span>
         </div>
         <ion-popover #popover [isOpen]="isTimerSettingOpen" (didDismiss)="toggleTimerSettingPopover(false)">
@@ -27,41 +27,41 @@
         </ion-popover>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/counter.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/counter.svg" alt="">
         <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.time?.[timeStatuses.Count] || '--.--'}}</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="">
         <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp1] || '--'}} °</span>
         <span class="dashboard__sensor-prompt">Датчик №1</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="">
         <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp2] || '--'}} °</span>
         <span class="dashboard__sensor-prompt">Датчик №2</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="">
         <span class="dashboard__sensor-label">{{(sensorsData$ | async)?.temp?.[temperatureStatuses.Temp3] || '--'}} °</span>
         <span class="dashboard__sensor-prompt">Датчик №3</span>
       </div>
 
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.IN1] === 1 ? 'ON' : 'OFF'}}
       </span>
         <span class="dashboard__sensor-prompt">Канал IN1</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.IN2] === 1 ? 'ON' : 'OFF'}}
       </span>
         <span class="dashboard__sensor-prompt">Канал IN2</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/ignition.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/ignition.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'ON' : 'OFF'}}
       </span>
@@ -69,21 +69,21 @@
       </div>
 
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.K1] === 1 ? 'ON' : 'OFF'}}
       </span>
         <span class="dashboard__sensor-prompt">Реле K1</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.K4] === 1 ? 'ON' : 'OFF'}}
       </span>
         <span class="dashboard__sensor-prompt">Реле K4</span>
       </div>
       <div class="dashboard__sensor-data">
-        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg">
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="">
         <span class="dashboard__sensor-label" [class.active-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1">
         {{(sensorsData$ | async)?.pin?.[pinStatuses.K5] === 1 ? 'ON' : 'OFF'}}
       </span>

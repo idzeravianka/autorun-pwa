@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { BehaviorSubject, filter, skip, take } from 'rxjs';
 
 import { MqttCommands } from '../../core/enums/mqtt-commands';
@@ -13,6 +14,7 @@ import { MqttService } from '../../core/services/mqtt.service';
 })
 export class MainControlButtonsComponent {
   public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = this.mqttService.sensorsData$;
+  public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
   public pinStatuses: typeof PinStatuses = PinStatuses;
   public isStartStopExecuting: boolean;
   public isOpenLockExecuting: boolean;
@@ -20,7 +22,7 @@ export class MainControlButtonsComponent {
   public isFanOnExecuting: boolean;
   public isFanOffExecuting: boolean;
 
-  constructor(private mqttService: MqttService) { }
+  constructor(private notifier: NotifierService, private mqttService: MqttService) { }
 
   public startStopEngine(): void {
     this.sensorsData$.pipe(
@@ -29,6 +31,7 @@ export class MainControlButtonsComponent {
     ).subscribe(sensorsData => {
       if (sensorsData.pin?.[PinStatuses.K2] === 0) {
         this.mqttService.sendCommand(MqttCommands.StartEngine);
+        this.notifier.notify('warning', 'Выполняется попытка запуска');
       }
 
       if (sensorsData.pin?.[PinStatuses.K2] === 1) {

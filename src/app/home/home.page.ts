@@ -20,6 +20,7 @@ export class HomePageComponent {
 
   public updateTime$: BehaviorSubject<string> = this.mqttService.updateTime$;
   public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = this.mqttService.sensorsData$;
+  public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
   public pinStatuses: typeof PinStatuses = PinStatuses;
   public temperatureStatuses: typeof TemperatureStatuses = TemperatureStatuses;
   public timeStatuses: typeof TimeStatuses = TimeStatuses;
