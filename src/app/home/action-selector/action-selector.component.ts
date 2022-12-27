@@ -28,6 +28,7 @@ const actions: { value: string; viewValue: string }[] = [
 })
 export class ActionSelectorComponent {
   public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
+  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = this.mqttService.sensorsData$;
   public actions: { value: string; viewValue: string }[] = actions;
   public selectedAction = actions[0].value;
   public isLoading: boolean;

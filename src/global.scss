@@ -110,3 +110,18 @@ table {
 ion-modal {
   color: $black;
 }
+
+@media (min-width: 440px) {
+  ion-app {
+    width: 420px;
+    height: 730px;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%,-50%);
+    box-shadow: 0px 0px 70px 50px rgba(34, 60, 80, 0.15);
+  }
+
+  body {
+    background-color: #e5e5e5;
+  }
+}

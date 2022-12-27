@@ -11,6 +11,7 @@ import { MqttService } from '../../core/services/mqtt.service';
 })
 export class MenuComponent {
   public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
+  public version$: BehaviorSubject<string> = this.mqttService.version$;
 
   constructor(private mqttService: MqttService, private navController: NavController) { }
 

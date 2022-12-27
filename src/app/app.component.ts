@@ -16,8 +16,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.mqttService.checkAppVersion();
+    this.mqttService.loadVersion();
     this.mqttService.listenInternetConnection();
-    this.mqttService.connect();
+    if (this.mqttService.hasInternetConnection$.value) {
+      this.mqttService.connect();
+    }
     this.mqttService.setTimerData();
   }
 

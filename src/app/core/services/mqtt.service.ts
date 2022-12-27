@@ -1,4 +1,5 @@
 /* eslint-disable no-magic-numbers */
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { NotifierService } from 'angular-notifier';
@@ -26,6 +27,7 @@ export class MqttService extends AutoCloseable {
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
   public hasInternetConnection$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public version$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   private client: Client;
   private mqttSettings: MqttSettings;
@@ -35,8 +37,15 @@ export class MqttService extends AutoCloseable {
     private notifier: NotifierService,
     @Inject(WINDOW_OBJECT) private window: Window,
     private swUpdate: SwUpdate,
+    private httpClient: HttpClient,
   ) {
     super();
+  }
+
+  public loadVersion(): void {
+    this.httpClient.get<{ version: string }>('../../../assets/version.json').subscribe(({ version }) => {
+      this.version$.next(version);
+    });
   }
 
   public checkAppVersion(): void {
@@ -84,6 +93,7 @@ export class MqttService extends AutoCloseable {
 
   public clearMqttConnectionSettings(): void {
     localStorage.removeItem('mqtt_seting');
+    this.sensorsData$.next(null);
 
     if (this.client) {
       this.client.disconnect();
@@ -147,7 +157,11 @@ export class MqttService extends AutoCloseable {
   };
 
   private onConnectionLost = (resObject: MQTTError) => {
-    this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
+    if (resObject.errorCode === 0) {
+      this.notifier.notify('warning', `${resObject.errorCode}:${resObject.errorMessage}`);
+    } else {
+      this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
+    }
   };
 
   private onMessageArrived = (message: Message) => {

@@ -6,7 +6,7 @@
         placeholder="Выберите действие"
         cancel-text="Отмена"
         interface="action-sheet"
-        [disabled]="!(hasInternetConnection$ | async)"
+        [disabled]="!(hasInternetConnection$ | async) || !(sensorsData$ | async)"
         [(ngModel)]="selectedAction">
         <ion-select-option *ngFor="let action of actions" [value]="action.value">{{action.viewValue}}</ion-select-option>
       </ion-select>
@@ -15,7 +15,7 @@
   <div class="actions__send-button">
     <az-hold-button
       [isLoading]="isLoading"
-      [disabled]="isLoading || !(hasInternetConnection$ | async)"
+      [disabled]="isLoading || !(hasInternetConnection$ | async) || !(sensorsData$ | async)"
       [iconUrl]="'assets/svg/send-command.svg'"
       [holdTime]="1"
       (holdTimeEnd)="sendCommand()">
