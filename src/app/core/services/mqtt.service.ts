@@ -149,7 +149,7 @@ export class MqttService extends AutoCloseable {
   }
 
   private onConnect = () => {
-    this.notifier.notify('success', 'Соединение с авто установлено');
+    this.notifier.notify('success', 'Соединение с брокером установлено');
     this.client.subscribe(`${this.mqttSettings.topic}/pub`);
     const message_pub = new Message('update');
     message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
