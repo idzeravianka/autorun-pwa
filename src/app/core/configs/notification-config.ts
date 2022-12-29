@@ -8,13 +8,13 @@ export const customNotifierOptions: NotifierOptions = {
     },
     vertical: {
       position: 'bottom',
-      distance: 30,
+      distance: 20,
       gap: 10,
     },
   },
   theme: 'material',
   behaviour: {
-    autoHide: 2000,
+    autoHide: 2500,
     onClick: 'hide',
     onMouseover: 'pauseAutoHide',
     showDismissButton: false,

@@ -43,9 +43,9 @@ export class MqttService extends AutoCloseable {
   }
 
   public loadVersion(): void {
-    this.httpClient.get<{ version: string }>('../../../assets/version.json').subscribe(({ version }) => {
-      this.version$.next(version);
-    });
+    // this.httpClient.get<{ version: string }>('assets/version.json').subscribe(({ version }) => {
+    //   this.version$.next(version);
+    // });
   }
 
   public checkAppVersion(): void {
