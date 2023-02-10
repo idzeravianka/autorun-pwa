@@ -15,11 +15,11 @@ export class NewVersionPromptService {
   constructor(private modalController: ModalController, private swUpdate: SwUpdate, @Inject(WINDOW_OBJECT) private window: Window) { }
 
   public checkAppVersion(): void {
-    const media = window.matchMedia('(display-mode: standalone)').matches;
-    const navigatorStandalone = (navigator as any).standalone;
-    const andref = document.referrer.includes('android-app://');
-
-    if (!media && !navigatorStandalone && !andref) { return; }
+    // const media = window.matchMedia('(display-mode: standalone)').matches;
+    // const navigatorStandalone = (navigator as any).standalone;
+    // const andref = document.referrer.includes('android-app://');
+    //
+    // if (!media && !navigatorStandalone && !andref) { return; }
 
     this.swUpdate.versionUpdates.pipe(take(1)).subscribe(async (event: VersionEvent) => {
       if (event.type === 'VERSION_READY') {
