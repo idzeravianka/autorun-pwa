@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { ModalController } from '@ionic/angular';
-import { take } from 'rxjs';
+// import { take } from 'rxjs';
 
 import { WINDOW_OBJECT } from '../../app.module';
 import { NewVersionPromptComponent } from '../components/new-version-prompt/new-version-prompt.component';
@@ -21,8 +21,11 @@ export class NewVersionPromptService {
     //
     // if (!media && !navigatorStandalone && !andref) { return; }
 
-    this.swUpdate.versionUpdates.pipe(take(1)).subscribe(async (event: VersionEvent) => {
+    this.swUpdate.versionUpdates.pipe(/*take(1)*/).subscribe(async (event: VersionEvent) => {
       if (event.type === 'VERSION_READY') {
+        // this.swUpdate.activateUpdate().then(() => {
+        //   this.window.location.reload();
+        // });
         const modal = await this.modalController.create({
           component: NewVersionPromptComponent,
         });
