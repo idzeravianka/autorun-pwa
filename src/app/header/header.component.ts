@@ -2,9 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { filter, map, Observable, skip, takeUntil } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, skip, takeUntil } from 'rxjs';
 
 import { AutoCloseable } from '../core/classes/auto-closable';
+import { MqttService } from '../core/services/mqtt.service';
 
 @Component({
   selector: 'az-header',
@@ -21,10 +22,11 @@ export class HeaderComponent extends AutoCloseable implements OnInit {
     filter((event) => event instanceof NavigationEnd),
     map((event: any) => event.url === '/' || event.url.includes('home')),
   );
+  public isEditDashboardModeEnabled$: BehaviorSubject<boolean> = this.mqttService.isEditDashboardModeEnabled$;
 
   private navigationHistory: string[] = [];
 
-  constructor(private router: Router, private location: Location, private navController: NavController) {
+  constructor(private router: Router, private location: Location, private navController: NavController, private mqttService: MqttService) {
     super();
   }
 
@@ -48,6 +50,13 @@ export class HeaderComponent extends AutoCloseable implements OnInit {
     } else {
       this.router.navigateByUrl('/');
     }
+  }
+
+  public switchDashboardEditMode(): void {
+    if (this.isEditDashboardModeEnabled$.value) {
+      this.mqttService.saveDashboardElementsSettings();
+    }
+    this.mqttService.toggleDashboardEditMode();
   }
 
 }

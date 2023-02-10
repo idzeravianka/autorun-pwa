@@ -125,3 +125,19 @@ ion-modal {
     background-color: #e5e5e5;
   }
 }
+
+ion-modal.dashboard-item-edit-modal {
+  padding: 0 30px;
+  --height: fit-content;
+  --border-radius: 16px;
+}
+
+ion-modal.dashboard-item-edit-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ion-modal.dashboard-item-edit-modal ion-toolbar {
+  --background: rgb(14 116 144);
+  --color: white;
+}

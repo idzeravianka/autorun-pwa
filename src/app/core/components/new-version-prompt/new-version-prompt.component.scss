@@ -1,0 +1,35 @@
+.new-version-prompt {
+  overflow-y: scroll;
+  padding: 15px 30px;
+  font-size: 16px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  & img {
+    width: 70%;
+    margin-bottom: 15px;
+  }
+
+  & p, ul {
+    margin-bottom: 15px;
+  }
+
+  & ul > li {
+    margin-bottom: 10px;
+  }
+
+  & b {
+    font-weight: bold;
+  }
+
+  &__action-buttons {
+    & ion-button:first-child {
+      margin-right: 5px;
+    }
+
+    & ion-button:last-child {
+      margin-left: 5px;
+    }
+  }
+}

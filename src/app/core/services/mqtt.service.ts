@@ -1,7 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
 import { NotifierService } from 'angular-notifier';
 import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
 import {
@@ -10,14 +8,17 @@ import {
   filter,
   fromEvent,
   Subject,
+  take,
   takeUntil,
 } from 'rxjs';
 
 import { WINDOW_OBJECT } from '../../app.module';
 import { AutoCloseable } from '../classes/auto-closable';
+import { DashboardItemNames } from '../enums/dashboard-item-names';
 import { TimeStatuses } from '../enums/time-statuses';
 import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
-import { MqttSettings } from '../interfaces/mqtt-settings';
+import { DashboardItemsSettings, ItemSettings, MqttSettings } from '../interfaces/mqtt-settings';
+import { getDefaultDashboardItemsSettings } from '../utils/default-dashboard-items-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,10 @@ export class MqttService extends AutoCloseable {
   public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
   public hasInternetConnection$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isEditDashboardModeEnabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public version$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public dashboardItemsSettings$: BehaviorSubject<DashboardItemsSettings> = new BehaviorSubject<DashboardItemsSettings>(
+    getDefaultDashboardItemsSettings());
 
   private client: Client;
   private mqttSettings: MqttSettings;
@@ -36,28 +40,41 @@ export class MqttService extends AutoCloseable {
   constructor(
     private notifier: NotifierService,
     @Inject(WINDOW_OBJECT) private window: Window,
-    private swUpdate: SwUpdate,
-    private httpClient: HttpClient,
   ) {
     super();
   }
 
-  public loadVersion(): void {
-    // this.httpClient.get<{ version: string }>('assets/version.json').subscribe(({ version }) => {
-    //   this.version$.next(version);
-    // });
+  public setDashboardElementsSettings(): void {
+    const savedMqttSettings = this.getMqttSavedSettings();
+    const dashboardElementsVisibility = savedMqttSettings && JSON.parse(savedMqttSettings)?.dashboardItemsSettings
+      ? JSON.parse(savedMqttSettings)?.dashboardItemsSettings
+      : getDefaultDashboardItemsSettings();
+
+    this.dashboardItemsSettings$.next(dashboardElementsVisibility);
   }
 
-  public checkAppVersion(): void {
-    this.swUpdate.versionUpdates.subscribe((event) => {
-      switch (event.type) {
-        case 'VERSION_READY':
-          this.swUpdate.activateUpdate().then(() => {
-            this.window.location.reload();
-          });
-          break;
-      }
+  public updateDashboardElementsSettings(itemName: DashboardItemNames, settings: ItemSettings): void {
+    this.dashboardItemsSettings$.pipe(
+      take(1),
+    ).subscribe(dashboardItemsSettings => {
+      dashboardItemsSettings[itemName] = { ...settings };
+      this.dashboardItemsSettings$.next(dashboardItemsSettings);
     });
+  }
+
+  public saveDashboardElementsSettings(): void {
+    const settings: MqttSettings = {
+      ...this.mqttSettings,
+      dashboardItemsSettings: {
+        ...this.dashboardItemsSettings$.value,
+      },
+    };
+    localStorage.setItem('mqtt_seting', JSON.stringify(settings));
+  }
+
+  public toggleDashboardEditMode(): void {
+    const isEditable = this.isEditDashboardModeEnabled$.value;
+    this.isEditDashboardModeEnabled$.next(!isEditable);
   }
 
   public listenInternetConnection(): void {

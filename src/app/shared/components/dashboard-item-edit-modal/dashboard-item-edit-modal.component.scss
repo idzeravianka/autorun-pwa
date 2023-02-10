@@ -1,0 +1,16 @@
+.dashboard-item-settings {
+  padding: 20px 30px;
+
+  &__setting {
+    margin-bottom: 15px;
+
+    & ion-checkbox {
+      --size: 22px;
+    }
+  }
+
+  &__save-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

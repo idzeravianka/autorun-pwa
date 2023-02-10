@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MqttService } from './core/services/mqtt.service';
+import { NewVersionPromptService } from './core/services/new-version-prompt.service';
 
 @Component({
   selector: 'az-root',
@@ -12,15 +13,13 @@ import { MqttService } from './core/services/mqtt.service';
   },
 })
 export class AppComponent implements OnInit {
-  constructor(private mqttService: MqttService) {}
+  constructor(private mqttService: MqttService, private newVersionPromptService: NewVersionPromptService) {}
 
   ngOnInit() {
-    this.mqttService.checkAppVersion();
-    this.mqttService.loadVersion();
+    this.newVersionPromptService.checkAppVersion();
+    this.mqttService.setDashboardElementsSettings();
     this.mqttService.listenInternetConnection();
-    if (this.mqttService.hasInternetConnection$.value) {
-      this.mqttService.connect();
-    }
+    if (this.mqttService.hasInternetConnection$.value) { this.mqttService.connect(); }
     this.mqttService.setTimerData();
   }
 

@@ -2,9 +2,9 @@
       <div class="header-wrapper">
         <div class="back-button">
           <ion-back-button *ngIf="!(isCoreRoute$ | async)"  color="light" text="Назад" (click)="navigationBack()"></ion-back-button>
+          <ion-icon *ngIf="isCoreRoute$ | async" [name]="(isEditDashboardModeEnabled$ | async) ? 'create' : 'create-outline'" class="edit-dashboard" color="light" (click)="switchDashboardEditMode()"></ion-icon>
         </div>
-<!--        <div class="back-button"><img *ngIf="!(isCoreRoute$ | async)" src="assets/svg/back.svg" (click)="navigationBack()"></div>-->
-        <div class="title">Анантомия автозапуска</div>
+        <div class="title">Анатомия автозапуска</div>
         <div class="gears-container">
           <div
             class="gear-rotate"

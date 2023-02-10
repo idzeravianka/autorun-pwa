@@ -10,6 +10,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NewVersionPromptComponent } from './core/components/new-version-prompt/new-version-prompt.component';
 import { PormptComponent } from './core/components/pormpt/pormpt.component';
 import { customNotifierOptions } from './core/configs/notification-config';
 import { PwaPromptService } from './core/services/pwa-prompt.service';
@@ -20,7 +21,7 @@ export const WINDOW_OBJECT = new InjectionToken<string>('WindowObject');
 const initializer = (pwaService: PwaPromptService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
-  declarations: [AppComponent, PormptComponent],
+  declarations: [AppComponent, PormptComponent, NewVersionPromptComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

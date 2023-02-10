@@ -6,6 +6,9 @@ import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { SwiperModule } from 'swiper/angular';
 
 import { HeaderModule } from '../header/header.module';
+import {
+  DashboardItemEditModalModule,
+} from '../shared/components/dashboard-item-edit-modal/dashboard-item-edit-modal.module';
 import { HoldButtonModule } from '../shared/components/hold-button/hold-button.module';
 import { ToTimeModule } from '../shared/pipes/to-time/to-time.module';
 import { ActionSelectorComponent } from './action-selector/action-selector.component';
@@ -25,6 +28,7 @@ SwiperCore.use([Navigation, Pagination]);
     ToTimeModule,
     HoldButtonModule,
     SwiperModule,
+    DashboardItemEditModalModule,
   ],
   declarations: [HomePageComponent, MainControlButtonsComponent, ActionSelectorComponent],
 })

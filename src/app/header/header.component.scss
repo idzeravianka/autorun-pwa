@@ -12,6 +12,12 @@
   align-items: center;
   justify-content: center;
   min-width: 72px;
+  cursor: pointer;
+}
+
+.edit-dashboard {
+  font-size: 28px;
+  cursor: pointer;
 }
 
 .title {
@@ -29,6 +35,7 @@
 .gears-container{
   font-size: 10px;
   padding: 14px;
+  cursor: pointer;
 }
 
 .gear-rotate.setting-open-animation {

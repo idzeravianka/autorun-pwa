@@ -1,0 +1,21 @@
+<ion-toolbar color="primary">
+  <ion-title>{{this.itemName}}</ion-title>
+  <ion-buttons slot="end">
+    <ion-button color="light" (click)="cancel()"><ion-icon name="close-outline"></ion-icon></ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<div class="dashboard-item-settings" [formGroup]="form" *ngIf="!!form">
+  <ion-list>
+    <ion-item class="ion-no-padding dashboard-item-settings__setting" *ngIf="itemType !== itemTypes.WebastoButtons && itemType !== itemTypes.CentralLock">
+      <ion-label position="floating" color="primary">Название на рабочем столе:</ion-label>
+      <ion-input formControlName="itemName" [placeholder]="this.itemName"></ion-input>
+    </ion-item>
+    <ion-item class="ion-no-padding dashboard-item-settings__setting">
+      <ion-checkbox formControlName="isVisibleOnDashboard"></ion-checkbox>
+      <ion-label>Отображать данные</ion-label>
+    </ion-item>
+  </ion-list>
+  <div class="dashboard-item-settings__save-button">
+    <ion-button (click)="confirm()">Обновить</ion-button>
+  </div>
+</div>
