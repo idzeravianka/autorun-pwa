@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1676801355203,
+  "timestamp": 1676801677353,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -68,7 +68,7 @@
         "/autorun-pwa/9958.4c284eda88c8c601.js",
         "/autorun-pwa/common.010d554d20c31283.js",
         "/autorun-pwa/index.html",
-        "/autorun-pwa/main.3ec269d6bd2210e9.js",
+        "/autorun-pwa/main.24980c3f8eb520f0.js",
         "/autorun-pwa/manifest.webmanifest",
         "/autorun-pwa/polyfills-core-js.aae6b5d519b4cdc7.js",
         "/autorun-pwa/polyfills-dom.3a5e3168052f1fc5.js",
@@ -186,7 +186,7 @@
     "/autorun-pwa/assets/icons/icon-72x72.png": "38d4d39b53bcd97984a89b0fb65d7a6655359402",
     "/autorun-pwa/assets/icons/icon-96x96.png": "8079109ecdc288b277460829751567aed66a2ca2",
     "/autorun-pwa/assets/ios-menu-btn.png": "85935a3142fbdca3ebd69db254792588e3c48b13",
-    "/autorun-pwa/assets/md/new-version-prompt-content/new-version.html": "6aeea8f0c1b1c5f89f387fc4aa664d3563f664ec",
+    "/autorun-pwa/assets/md/new-version-prompt-content/new-version.html": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
     "/autorun-pwa/assets/md/new-version-prompt-content/new-version.png": "6ebdfc8f3e52c73d827a1329eff29de2a0ea2ba5",
     "/autorun-pwa/assets/md/new-version-prompt-content/new-version1.png": "29eb2e70c1eb2e89ca437c8b07c827225c49e1f0",
     "/autorun-pwa/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
@@ -206,8 +206,8 @@
     "/autorun-pwa/assets/svg/voltage.svg": "a5bb27346ecb3cb8f9de541c754e3363602fd6f0",
     "/autorun-pwa/assets/version.json": "1c4e542de7eab826f47ccc5e090827f77c984815",
     "/autorun-pwa/common.010d554d20c31283.js": "9735917c4e3234e60ad9900f5fea14c169d896ad",
-    "/autorun-pwa/index.html": "52eb94efb043875fdadf01af394b3391fe04c426",
-    "/autorun-pwa/main.3ec269d6bd2210e9.js": "06929854751d3aeae56b46e477eec333ae882873",
+    "/autorun-pwa/index.html": "b3641f42f7de0d6371ebb73eec28001077181b28",
+    "/autorun-pwa/main.24980c3f8eb520f0.js": "b861ecea47b2c82ba396f6d4371e1b327ff2d455",
     "/autorun-pwa/manifest.webmanifest": "d04d9e02611b90e5a75dd6b2a6d460e8d4cab70b",
     "/autorun-pwa/polyfills-core-js.aae6b5d519b4cdc7.js": "e6fb2e72255d987bc5dc500fb064261c793716a4",
     "/autorun-pwa/polyfills-dom.3a5e3168052f1fc5.js": "50f6ff473a0568bffb8a9d412d7efaced2d36137",
