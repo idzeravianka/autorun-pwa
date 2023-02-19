@@ -1,10 +1,21 @@
-.new-version-prompt {
+:host::ng-deep .new-version-prompt {
   overflow-y: scroll;
   padding: 15px 30px;
   font-size: 16px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+
+  & .title {
+    font-size: 18px;
+  }
+
+  & div:first-child {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: justify;
+  }
 
   & img {
     width: 70%;

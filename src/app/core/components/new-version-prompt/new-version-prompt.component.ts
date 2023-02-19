@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { ModalActions } from '../../enums/modal-actions';
@@ -9,6 +9,7 @@ import { ModalActions } from '../../enums/modal-actions';
   styleUrls: ['./new-version-prompt.component.scss'],
 })
 export class NewVersionPromptComponent implements OnInit {
+  @Input() content: string;
 
   constructor(private modalCtrl: ModalController) { }
 
