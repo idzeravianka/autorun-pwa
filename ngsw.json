@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1676800237555,
+  "timestamp": 1676800938154,
   "index": "/autorun-pwa/index.html",
   "assetGroups": [
     {
@@ -186,7 +186,7 @@
     "/autorun-pwa/assets/icons/icon-72x72.png": "38d4d39b53bcd97984a89b0fb65d7a6655359402",
     "/autorun-pwa/assets/icons/icon-96x96.png": "8079109ecdc288b277460829751567aed66a2ca2",
     "/autorun-pwa/assets/ios-menu-btn.png": "85935a3142fbdca3ebd69db254792588e3c48b13",
-    "/autorun-pwa/assets/md/new-version-prompt-content/new-version.html": "209c5a920520c2089b70b34600db389826e64100",
+    "/autorun-pwa/assets/md/new-version-prompt-content/new-version.html": "6aeea8f0c1b1c5f89f387fc4aa664d3563f664ec",
     "/autorun-pwa/assets/md/new-version-prompt-content/new-version.png": "6ebdfc8f3e52c73d827a1329eff29de2a0ea2ba5",
     "/autorun-pwa/assets/md/new-version-prompt-content/new-version1.png": "29eb2e70c1eb2e89ca437c8b07c827225c49e1f0",
     "/autorun-pwa/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
