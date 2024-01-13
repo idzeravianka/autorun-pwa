@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href \"/autorun-pwa/\" ",
+    "build": "ng build --configuration production --base-href /autorun-pwa/",
+    "deploy-to-gh": "npx angular-cli-ghpages --dir=www --no-silent",
     "deploy": "ng deploy --base-href=/autorun-pwa/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
