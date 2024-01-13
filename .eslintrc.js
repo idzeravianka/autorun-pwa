@@ -20,7 +20,6 @@ module.exports = {
       "plugins": [
         "@angular-eslint/eslint-plugin",
         "@typescript-eslint",
-        "@typescript-eslint/eslint-plugin-tslint",
         "eslint-plugin-import",
         "eslint-plugin-jsdoc",
         "deprecation"

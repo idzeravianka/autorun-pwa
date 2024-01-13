@@ -1,7 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonPopover, ModalController, RangeCustomEvent } from '@ionic/angular';
 import { NotifierService } from 'angular-notifier';
-import { BehaviorSubject, filter, skip, take, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  Observable,
+  of,
+  skip,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs';
 
 import { AutoCloseable } from '../core/classes/auto-closable';
 import { DashboardItemNames } from '../core/enums/dashboard-item-names';
@@ -34,7 +45,6 @@ export class HomePageComponent extends AutoCloseable implements OnInit {
   public timeStatuses: typeof TimeStatuses = TimeStatuses;
   public dashboardItemNames: typeof DashboardItemNames = DashboardItemNames;
   public isEditDashboardModeEnabled: boolean;
-  public isUpdateInProgress: boolean;
   public isTimerSetInProgress: boolean;
   public isTimerSettingOpen: boolean;
   public timerValue: number = 0;
@@ -97,15 +107,31 @@ export class HomePageComponent extends AutoCloseable implements OnInit {
   }
 
   public updateSensorsData(event?: any): void {
-    this.mqttService.sendCommand(MqttCommands.Update);
-    this.isUpdateInProgress = true;
-    this.sensorsData$.pipe(
+    combineLatest([
+      this.sensorsData$,
+      this.hasInternetConnection$,
+    ]).pipe(
+      take(1),
+      switchMap(([sensorsData, hasInternetConnection]) => {
+        if (!sensorsData || !hasInternetConnection) {
+          this.notifier.notify('warning', !sensorsData ? 'Нет данных для обновления' : 'Интернет соединение отсутствует');
+          return of(null);
+        }
+
+        this.mqttService.sendCommand(MqttCommands.Update);
+        return this.waitTillSensorsDataUpdated();
+      }),
+      tap(() => {
+        if (event) event.target.complete();
+      }),
+    ).subscribe();
+  }
+
+  private waitTillSensorsDataUpdated(): Observable<MqttSensorsDataResponse> {
+    return this.sensorsData$.pipe(
       skip(1),
       filter<MqttSensorsDataResponse | null>(Boolean),
       take(1),
-    ).subscribe(() => {
-      this.isUpdateInProgress = false;
-      if (event) event.target.complete();
-    });
+    );
   }
 }

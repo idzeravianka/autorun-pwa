@@ -2,56 +2,42 @@
   <div class="settings" [formGroup]="settingsForm" *ngIf="!!settingsForm">
     <div class="settings__title">Настройки</div>
     <ion-list class="settings__field">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating" color="primary">Сервер (MQTT broker):</ion-label>
-        <ion-input formControlName="server" placeholder="srv2.clusterfly.ru"></ion-input>
-        <ion-note slot="error" *ngIf="settingsForm.controls.server.errors?.pattern && settingsForm.controls.server.touched">
-          Неверный формат
-        </ion-note>
-        <ion-note slot="error" *ngIf="settingsForm.controls.server.errors?.required && settingsForm.controls.server.touched">
-          Поле обязательно для заполнения
-        </ion-note>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating" color="primary">Порт (MQTT port):</ion-label>
-        <ion-input formControlName="port" placeholder="9994"></ion-input>
-        <ion-note slot="error" *ngIf="settingsForm.controls.port.errors?.pattern && settingsForm.controls.port.touched">
-          Неверный формат
-        </ion-note>
-        <ion-note slot="error" *ngIf="settingsForm.controls.port.errors?.required && settingsForm.controls.port.touched">
-          Поле обязательно для заполнения
-        </ion-note>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating" color="primary">Логин (MQTT user):</ion-label>
-        <ion-input formControlName="user" placeholder="user"></ion-input>
-        <ion-note slot="error" *ngIf="settingsForm.controls.user.errors?.pattern && settingsForm.controls.user.touched">
-          Неверный формат
-        </ion-note>
-        <ion-note slot="error" *ngIf="settingsForm.controls.user.errors?.required && settingsForm.controls.user.touched">
-          Поле обязательно для заполнения
-        </ion-note>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating" color="primary">Пароль (MQTT password):</ion-label>
-        <ion-input type="password" formControlName="pass" placeholder="qwerty"></ion-input>
-        <ion-note slot="error" *ngIf="settingsForm.controls.pass.errors?.pattern && settingsForm.controls.pass.touched">
-          Неверный формат
-        </ion-note>
-        <ion-note slot="error" *ngIf="settingsForm.controls.pass.errors?.required && settingsForm.controls.pass.touched">
-          Поле обязательно для заполнения
-        </ion-note>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating" color="primary">Префикс топика (prefix):</ion-label>
-        <ion-input formControlName="topic" placeholder="user_12345678/c5"></ion-input>
-        <ion-note slot="error" *ngIf="settingsForm.controls.topic.errors?.pattern && settingsForm.controls.topic.touched">
-          Неверный формат
-        </ion-note>
-        <ion-note slot="error" *ngIf="settingsForm.controls.topic.errors?.required && settingsForm.controls.topic.touched">
-          Поле обязательно для заполнения
-        </ion-note>
-      </ion-item>
+      <ion-input
+        formControlName="server"
+        placeholder="srv2.clusterfly.ru"
+        label="Сервер (MQTT broker):"
+        labelPlacement="floating"
+        [errorText]="('' | getErrorText : settingsForm.controls.server) | async"
+      ></ion-input>
+      <ion-input
+        formControlName="port"
+        placeholder="9994"
+        label="Порт (MQTT port):"
+        labelPlacement="floating"
+        [errorText]="('' | getErrorText : settingsForm.controls.port) | async"
+      ></ion-input>
+      <ion-input
+        formControlName="user"
+        placeholder="user"
+        label="Логин (MQTT user):"
+        labelPlacement="floating"
+        [errorText]="('' | getErrorText : settingsForm.controls.user) | async"
+      ></ion-input>
+      <ion-input
+        type="password"
+        formControlName="pass"
+        placeholder="qwerty"
+        label="Пароль (MQTT password):"
+        labelPlacement="floating"
+        [errorText]="('' | getErrorText : settingsForm.controls.pass) | async"
+      ></ion-input>
+      <ion-input
+        formControlName="topic"
+        placeholder="user_12345678/c5"
+        label="Префикс топика (prefix):"
+        labelPlacement="floating"
+        [errorText]="('' | getErrorText : settingsForm.controls.topic) | async"
+      ></ion-input>
     </ion-list>
     <div class="settings__field">
       <ion-button fill="outline" class="settings__button" (click)="showConfirmationDialog()">Очистить</ion-button>
