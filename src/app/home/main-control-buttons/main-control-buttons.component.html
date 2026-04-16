@@ -1,89 +1,146 @@
 <div class="control-buttons">
-  <div class="control-buttons__wrapper" [class.dashboard__section_edit-mode]="isEditDashboardModeEnabled">
-    <div class="dashboard__sensor-data-edit" [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible">
-      <ion-icon class="edit-button" (click)="openItemEditModalFor(dashboardItemNames.WebastoButtons)" name="create-outline"></ion-icon>
+  <div
+    class="control-buttons__wrapper"
+    [class.dashboard__section_edit-mode]="isEditDashboardModeEnabled()"
+  >
+    <div
+      class="dashboard__sensor-data-edit"
+      [class.dashboard__sensor-data-edit_blur]="
+        !dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible
+      "
+    >
+      <ion-icon
+        class="edit-button"
+        (click)="openItemEditModalFor(dashboardItemNames.WebastoButtons)"
+        name="create-outline"
+      ></ion-icon>
     </div>
-    <div class="small-button" *ngIf="dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible || isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isFanOnExecuting"
-        [disabled]="isFanOnExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/fan-on.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="fanOn()">
-      </az-hold-button>
-    </div>
-    <div class="small-button"
-         *ngIf="(dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible && dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible)
-         || isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isFanOffExecuting"
-        [disabled]="isFanOffExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/fan-off.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="fanOff()">
-      </az-hold-button>
-    </div>
-    <div class="small-button"
-         *ngIf="!dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible
-         && dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible
-         && !isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isOpenLockExecuting"
-        [disabled]="isOpenLockExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/open-lock.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="openLock()">
-      </az-hold-button>
-    </div>
+    @if (
+      dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible ||
+      isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isFanOnExecuting"
+          [disabled]="isFanOnExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/fan-on.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="fanOn()"
+        >
+        </az-hold-button>
+      </div>
+    }
+    @if (
+      (dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible &&
+        dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible) ||
+      isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isFanOffExecuting"
+          [disabled]="isFanOffExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/fan-off.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="fanOff()"
+        >
+        </az-hold-button>
+      </div>
+    }
+    @if (
+      !dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible &&
+      dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible &&
+      !isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isOpenLockExecuting"
+          [disabled]="isOpenLockExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/open-lock.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="openLock()"
+        >
+        </az-hold-button>
+      </div>
+    }
   </div>
   <div class="control-buttons__start-stop-button-wrapper">
     <az-hold-button
-      [class.stop-color]="(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 && !isStartStopExecuting"
+      [class.stop-color]="sensorsData()?.pin?.[pinStatuses.K2] === 1 && !isStartStopExecuting"
       [isLoading]="isStartStopExecuting"
-      [disabled]="isStartStopExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
+      [disabled]="isStartStopExecuting || !sensorsData() || !hasInternetConnection()"
       [iconUrl]="'assets/svg/car.svg'"
       [holdTime]="1.5"
-      (holdTimeEnd)="startStopEngine()">
-                <span class="control-buttons__start-stop-title" *ngIf="!isStartStopExecuting">
-                  {{(sensorsData$ | async)?.pin?.[pinStatuses.K2] === 1 ? 'Стоп двигателя' : 'Запуск двигателя'}}
-                </span>
+      (holdTimeEnd)="startStopEngine()"
+    >
+      @if (!isStartStopExecuting) {
+        <span class="control-buttons__start-stop-title">
+          {{ sensorsData()?.pin?.[pinStatuses.K2] === 1 ? 'Стоп двигателя' : 'Запуск двигателя' }}
+        </span>
+      }
     </az-hold-button>
   </div>
-  <div class="control-buttons__wrapper" [class.dashboard__section_edit-mode]="isEditDashboardModeEnabled">
-    <div class="dashboard__sensor-data-edit" [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible">
-      <ion-icon class="edit-button" (click)="openItemEditModalFor(dashboardItemNames.CentralLock)" name="create-outline"></ion-icon>
+  <div
+    class="control-buttons__wrapper"
+    [class.dashboard__section_edit-mode]="isEditDashboardModeEnabled()"
+  >
+    <div
+      class="dashboard__sensor-data-edit"
+      [class.dashboard__sensor-data-edit_blur]="
+        !dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible
+      "
+    >
+      <ion-icon
+        class="edit-button"
+        (click)="openItemEditModalFor(dashboardItemNames.CentralLock)"
+        name="create-outline"
+      ></ion-icon>
     </div>
-    <div class="small-button"
-         *ngIf="(dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible && dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible)
-         || isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isOpenLockExecuting"
-        [disabled]="isOpenLockExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/open-lock.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="openLock()">
-      </az-hold-button>
-    </div>
-    <div class="small-button" *ngIf="dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible || isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isCloseLockExecuting"
-        [disabled]="isCloseLockExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/close-lock.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="closeLock()">
-      </az-hold-button>
-    </div>
-    <div class="small-button"
-         *ngIf="dashboardItemsSettings[dashboardItemNames.WebastoButtons].isVisible
-         && !dashboardItemsSettings[dashboardItemNames.CentralLock].isVisible
-         && !isEditDashboardModeEnabled">
-      <az-hold-button
-        [isLoading]="isFanOffExecuting"
-        [disabled]="isFanOffExecuting || !(sensorsData$ | async) || !(hasInternetConnection$ | async)"
-        [iconUrl]="'assets/svg/fan-off.svg'"
-        [holdTime]="1"
-        (holdTimeEnd)="fanOff()">
-      </az-hold-button>
-    </div>
+    @if (
+      (dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible &&
+        dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible) ||
+      isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isOpenLockExecuting"
+          [disabled]="isOpenLockExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/open-lock.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="openLock()"
+        >
+        </az-hold-button>
+      </div>
+    }
+    @if (
+      dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible ||
+      isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isCloseLockExecuting"
+          [disabled]="isCloseLockExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/close-lock.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="closeLock()"
+        >
+        </az-hold-button>
+      </div>
+    }
+    @if (
+      dashboardItemsSettings()[dashboardItemNames.WebastoButtons].isVisible &&
+      !dashboardItemsSettings()[dashboardItemNames.CentralLock].isVisible &&
+      !isEditDashboardModeEnabled()
+    ) {
+      <div class="small-button">
+        <az-hold-button
+          [isLoading]="isFanOffExecuting"
+          [disabled]="isFanOffExecuting || !sensorsData() || !hasInternetConnection()"
+          [iconUrl]="'assets/svg/fan-off.svg'"
+          [holdTime]="1"
+          (holdTimeEnd)="fanOff()"
+        >
+        </az-hold-button>
+      </div>
+    }
   </div>
 </div>

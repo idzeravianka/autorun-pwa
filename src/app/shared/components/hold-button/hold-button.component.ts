@@ -1,10 +1,22 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { CircleProgressComponent } from 'ng-circle-progress';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { CircleProgressComponent, NgCircleProgressModule } from 'ng-circle-progress';
 
 @Component({
   selector: 'az-hold-button',
   templateUrl: './hold-button.component.html',
   styleUrls: ['./hold-button.component.scss'],
+  imports: [CommonModule, IonicModule, NgCircleProgressModule],
+  standalone: true,
 })
 export class HoldButtonComponent {
   @Input() disabled: boolean;
@@ -18,9 +30,8 @@ export class HoldButtonComponent {
 
   public isButtonPressed: boolean;
 
-  private pressedTimerId: any;
-
-  constructor(private cdr: ChangeDetectorRef) {}
+  private pressedTimerId: ReturnType<typeof setTimeout> | undefined;
+  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   public onStartStopPressed(e: Event): void {
     if (e.cancelable) e.preventDefault();

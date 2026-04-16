@@ -1,25 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { IonApp, IonRouterOutlet, IonHeader, IonContent } from '@ionic/angular/standalone';
 
+import { HeaderComponent } from './core/components/header/header.component';
 import { MqttService } from './core/services/mqtt.service';
-import { NewVersionPromptService } from './core/services/new-version-prompt.service';
 
 @Component({
   selector: 'az-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+  standalone: true,
+  imports: [IonApp, IonRouterOutlet, IonHeader, IonContent, HeaderComponent],
   host: {
     '(document:visibilitychange)': 'onVisibilityChange()',
   },
 })
 export class AppComponent implements OnInit {
-  constructor(private mqttService: MqttService, private newVersionPromptService: NewVersionPromptService) {}
+  private mqttService: MqttService = inject(MqttService);
 
   ngOnInit() {
-    this.newVersionPromptService.checkAppVersion();
+    // this.newVersionPromptService.checkAppVersion();
     this.mqttService.setDashboardElementsSettings();
     this.mqttService.listenInternetConnection();
-    if (this.mqttService.hasInternetConnection$.value) { this.mqttService.connect(); }
+    if (this.mqttService.hasInternetConnection()) {
+      this.mqttService.connect();
+    }
     this.mqttService.setTimerData();
   }
 

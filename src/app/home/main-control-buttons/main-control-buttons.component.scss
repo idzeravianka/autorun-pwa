@@ -34,7 +34,7 @@
   }
 }
 
-.stop-color ::ng-deep  .hold-button{
+.stop-color ::ng-deep .hold-button {
   background-color: $red;
   border: 4px solid $red-accent;
   --background: #b71c1c;
@@ -42,7 +42,7 @@
 }
 
 .dashboard__section_edit-mode {
-  animation: reverse-wiggle .35s infinite;
+  animation: reverse-wiggle 0.35s infinite;
 
   .dashboard__sensor-data-edit {
     display: block;
@@ -60,7 +60,6 @@
 .dashboard__sensor-data-edit_blur {
   backdrop-filter: blur(1px);
 }
-
 
 .edit-button {
   position: absolute;

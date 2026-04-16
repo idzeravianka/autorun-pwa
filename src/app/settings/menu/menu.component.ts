@@ -1,27 +1,33 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { IonButton } from '@ionic/angular/standalone';
 
-import { WINDOW_OBJECT } from '../../app.module';
+import { WINDOW_OBJECT } from 'src/app/app.config';
+
+import { environment } from '../../../environments/environment';
 import { MqttService } from '../../core/services/mqtt.service';
 
 @Component({
   selector: 'az-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  standalone: true,
+  imports: [IonButton],
 })
 export class MenuComponent {
-  public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
-  public version$: BehaviorSubject<string> = this.mqttService.version$;
+  public hasInternetConnection: Signal<boolean>;
+  public version: string = environment.version;
 
-  constructor(
-    private mqttService: MqttService,
-    private navController: NavController,
-    @Inject(WINDOW_OBJECT) private window: Window,
-  ) { }
+  private mqttService: MqttService = inject(MqttService);
+  private navController: NavController = inject(NavController);
+  private window: Window = inject(WINDOW_OBJECT);
 
-  public navigateTo(urlSegment: string): void {
-    this.navController.navigateForward(urlSegment);
+  constructor() {
+    this.hasInternetConnection = this.mqttService.hasInternetConnection;
+  }
+
+  public async navigateTo(urlSegment: string): Promise<void> {
+    await this.navController.navigateForward(urlSegment);
   }
 
   public openTelegram(): void {

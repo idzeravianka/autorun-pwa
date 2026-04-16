@@ -1,25 +1,33 @@
 <div class="prompt shadow-override">
   <div class="prompt__title">
     <span>Установи приложение</span>
-    <ion-button *ngIf="data.mobileType === 'ios'" fill="outline" class="prompt__close" (click)="close()">
-      X
-    </ion-button>
+    @if (data.mobileType === 'ios') {
+      <ion-button fill="outline" class="prompt__close" (click)="close()"> X </ion-button>
+    }
   </div>
   <div class="prompt__tiles">
     <div class="prompt__tile"></div>
     <div class="prompt__tile"></div>
-    <img class="prompt__tile" src="assets/icons/icon-512x512.png" alt="">
+    <img class="prompt__tile" src="assets/icons/icon-512x512.png" alt="" />
     <div class="prompt__tile"></div>
     <div class="prompt__tile"></div>
   </div>
   <div class="prompt__info-text">
-    Установи приложение на домашний экран своего телефона для быстрого и простого доступа к его функционалу.
+    Установи приложение на домашний экран своего телефона для быстрого и простого доступа к его
+    функционалу.
   </div>
-  <div *ngIf="data.mobileType === 'ios'" class="prompt__for-ios">
-    Нажми <img src="assets/ios-menu-btn.png" class="prompt__ios-icon" alt=""> а затем&nbsp;<span class="bold">На экран «Домой»</span>
-  </div>
-  <div *ngIf="data.mobileType === 'android'" class="prompt__buttons">
-    <ion-button fill="outline" class="prompt__button" (click)="close()">Закрыть</ion-button>
-    <ion-button class="prompt__button" (click)="installPwa()">Установить</ion-button>
-  </div>
+  @if (data.mobileType === 'ios') {
+    <div class="prompt__for-ios">
+      Нажми <img src="assets/ios-menu-btn.png" class="prompt__ios-icon" alt="" /> а затем&nbsp;<span
+        class="bold"
+        >На экран «Домой»</span
+      >
+    </div>
+  }
+  @if (data.mobileType === 'android') {
+    <div class="prompt__buttons">
+      <ion-button fill="outline" class="prompt__button" (click)="close()">Закрыть</ion-button>
+      <ion-button class="prompt__button" (click)="installPwa()">Установить</ion-button>
+    </div>
+  }
 </div>

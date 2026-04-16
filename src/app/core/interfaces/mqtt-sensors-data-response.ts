@@ -5,4 +5,9 @@ export interface MqttSensorsDataResponse {
   control?: number[];
 }
 
-export const initialMqttSensorsData: MqttSensorsDataResponse = { pin: [], temp: [], time: [], control: [] };
+export const initialMqttSensorsData: MqttSensorsDataResponse = {
+  pin: [],
+  temp: [],
+  time: [],
+  control: [],
+};
