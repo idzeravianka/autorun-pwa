@@ -1,9 +1,9 @@
-@import '../../theme/colors';
+@import '../../../../theme/colors';
 
 @function gear-background($color) {
-  @return linear-gradient(0deg,transparent 39%, $color 39%, $color 61%, transparent 61%),
-          linear-gradient(60deg,transparent 42%, $color 42%, $color 58%, transparent 58%),
-          linear-gradient(120deg,transparent 42%, $color 42%, $color 58%, transparent 58%);
+  @return linear-gradient(0deg, transparent 39%, $color 39%, $color 61%, transparent 61%),
+    linear-gradient(60deg, transparent 42%, $color 42%, $color 58%, transparent 58%),
+    linear-gradient(120deg, transparent 42%, $color 42%, $color 58%, transparent 58%);
 }
 
 .back-button {
@@ -32,33 +32,33 @@
   background-color: $base;
 }
 
-.gears-container{
+.gears-container {
   font-size: 10px;
   padding: 14px;
   cursor: pointer;
 }
 
 .gear-rotate.setting-open-animation {
-  animation: .5s gear-rotate-open alternate;
+  animation: 0.5s gear-rotate-open alternate;
   background-color: $yellow;
 
   &:before {
-    animation: .5s color-change-open alternate;
+    animation: 0.5s color-change-open alternate;
     background: gear-background($yellow);
   }
 }
 
 .gear-rotate.setting-close-animation {
-  animation: .5s gear-rotate-close alternate;
+  animation: 0.5s gear-rotate-close alternate;
   background-color: $white;
 
   &:before {
-    animation: .5s color-change-close alternate;
+    animation: 0.5s color-change-close alternate;
     background: gear-background($white);
   }
 }
 
-.gear-rotate{
+.gear-rotate {
   width: 2em;
   height: 2em;
   background: $white;
@@ -70,20 +70,20 @@
   width: 2.8em;
   height: 2.8em;
   position: absolute;
-  content:"";
-  top: -.4em;
-  left: -.4em;
-  border-radius:1.4em;
+  content: '';
+  top: -0.4em;
+  left: -0.4em;
+  border-radius: 1.4em;
 }
 .gear-rotate::after {
   width: 1em;
   height: 1em;
   background: $base;
   position: absolute;
-  content:"";
-  top: .5em;
-  left: .5em;
-  border-radius: .5em;
+  content: '';
+  top: 0.5em;
+  left: 0.5em;
+  border-radius: 0.5em;
 }
 
 @keyframes gear-rotate-open {

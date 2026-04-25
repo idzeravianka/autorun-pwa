@@ -1,15 +1,17 @@
 <div class="settings-menu">
   <ion-button
     class="settings-menu__button"
-    [disabled]="!(hasInternetConnection$ | async)"
-    (click)="navigateTo('settings/connection')">
+    [disabled]="!hasInternetConnection()"
+    (click)="navigateTo('settings/connection')"
+  >
     Подключение
   </ion-button>
   <ion-button
     class="settings-menu__button"
-    [disabled]="!(hasInternetConnection$ | async)"
-    (click)="openTelegram()">
+    [disabled]="!hasInternetConnection()"
+    (click)="openTelegram()"
+  >
     Телеграм
   </ion-button>
-  <div class="version">Версия приложения: 0.0.1</div>
+  <div class="version">Версия приложения: {{ version }}</div>
 </div>

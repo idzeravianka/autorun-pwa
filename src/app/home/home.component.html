@@ -1,0 +1,329 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="updateSensorsData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="dashboard">
+    <div
+      class="dashboard__section"
+      [class.dashboard__section_edit-mode]="isEditDashboardModeEnabled()"
+    >
+      @if (dashboardItemsSettings()[dashboardItemNames.Voltage].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Voltage].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Voltage)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/voltage.svg" alt="Voltage" />
+        <span class="dashboard__sensor-label"
+          >{{sensorsData()?.pin?.[pinStatuses.Voltage] || '--'}} V</span
+        >
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.Voltage].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.Timer].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Timer].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Timer)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <div class="dashboard__sensor-data" (click)="toggleTimerSettingPopover(true, $event)">
+          <img class="dashboard__sensor-icon" src="assets/svg/timer.svg" alt="" />
+          <span class="dashboard__sensor-label">{{timerData() | toTime}}</span>
+          <span class="dashboard__sensor-prompt"
+            >{{dashboardItemsSettings()[dashboardItemNames.Timer].name}}</span
+          >
+        </div>
+        <ion-popover
+          #popover
+          [isOpen]="isTimerSettingOpen"
+          (didDismiss)="toggleTimerSettingPopover(false)"
+        >
+          <ng-template>
+            <ion-content class="dashboard__popover">
+              <div class="dashboard__popover-title">Минут: {{timerValue}}</div>
+              <ion-range
+                (ionChange)="onRangeChange($event)"
+                [min]="0"
+                [max]="60"
+                [snaps]="true"
+                [ticks]="true"
+                [step]="5"
+              ></ion-range>
+              <ion-button class="dashboard__popover-button ion-text-center" (click)="saveTimer()">
+                @if(isTimerSetInProgress) {
+
+                <ion-spinner></ion-spinner>
+                } @if (!isTimerSetInProgress) {
+
+                <span>Установить</span>
+                }
+              </ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.Count].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Count].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Count)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/counter.svg" alt="" />
+        <span class="dashboard__sensor-label"
+          >{{sensorsData()?.time?.[timeStatuses.Count] || '--.--'}}</span
+        >
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.Count].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.Temp1].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Temp1].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Temp1)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="" />
+        <span class="dashboard__sensor-label"
+          >{{sensorsData()?.temp?.[temperatureStatuses.Temp1] || '--'}} °</span
+        >
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.Temp1].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.Temp2].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Temp2].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Temp2)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="" />
+        <span class="dashboard__sensor-label"
+          >{{sensorsData()?.temp?.[temperatureStatuses.Temp2] || '--'}} °</span
+        >
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.Temp2].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.Temp3].isVisible ||
+      isEditDashboardModeEnabled()) {
+
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.Temp3].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.Temp3)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/temperature.svg" alt="" />
+        <span class="dashboard__sensor-label"
+          >{{sensorsData()?.temp?.[temperatureStatuses.Temp3] || '--'}} °</span
+        >
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.Temp3].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.IN1].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.IN1].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.IN1)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.IN1] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.IN1] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.IN1].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.IN2].isVisible ||
+      isEditDashboardModeEnabled()) {
+
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.IN2].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.IN2)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/channel.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.IN2] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.IN2] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.IN2].name}}</span
+        >
+      </div>
+      } @if(dashboardItemsSettings()[dashboardItemNames.K2].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.K2].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.K2)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/ignition.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.K2] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.K2] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.K2].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.K1].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.K1].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.K1)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.K1] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.K1] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.K1].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.K4].isVisible ||
+      isEditDashboardModeEnabled()) {
+
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.K4].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.K4)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.K4] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.K4] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.K4].name}}</span
+        >
+      </div>
+      } @if (dashboardItemsSettings()[dashboardItemNames.K5].isVisible ||
+      isEditDashboardModeEnabled()) {
+      <div class="dashboard__sensor-data">
+        <div
+          class="dashboard__sensor-data-edit"
+          [class.dashboard__sensor-data-edit_blur]="!dashboardItemsSettings()[dashboardItemNames.K5].isVisible"
+        >
+          <ion-icon
+            class="edit-button"
+            (click)="openItemEditModalFor(dashboardItemNames.K5)"
+            name="create-outline"
+          ></ion-icon>
+        </div>
+        <img class="dashboard__sensor-icon" src="assets/svg/relay.svg" alt="" />
+        <span
+          class="dashboard__sensor-label"
+          [class.active-color]="sensorsData()?.pin?.[pinStatuses.K5] === 1"
+        >
+          {{sensorsData()?.pin?.[pinStatuses.K5] === 1 ? 'ON' : 'OFF'}}
+        </span>
+        <span class="dashboard__sensor-prompt"
+          >{{dashboardItemsSettings()[dashboardItemNames.K5].name}}</span
+        >
+      </div>
+      }
+    </div>
+
+    <div class="dashboard__section">
+      <swiper-container slides-per-view="1" pagination="true" loop="true">
+        <swiper-slide>
+          <az-main-control-buttons></az-main-control-buttons>
+        </swiper-slide>
+        <swiper-slide><az-action-selector></az-action-selector></swiper-slide>
+      </swiper-container>
+    </div>
+
+    <div class="dashboard__update-time">
+      @if (!!updateTime()) {
+      <span>Обновлено в: {{updateTime()}}</span>
+      }
+    </div>
+  </div>
+</ion-content>

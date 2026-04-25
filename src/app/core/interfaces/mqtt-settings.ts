@@ -6,7 +6,7 @@ export interface MqttSettings {
   user: string;
   pass: string;
   topic: string;
-  dashboardItemsSettings: DashboardItemsSettings;
+  dashboardItemsSettings?: DashboardItemsSettings;
 }
 
 export interface DashboardItemsSettings {
@@ -30,4 +30,3 @@ export interface ItemSettings {
   name: string;
   isVisible: boolean;
 }
-

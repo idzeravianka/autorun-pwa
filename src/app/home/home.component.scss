@@ -17,11 +17,11 @@
 
     &_edit-mode {
       .dashboard__sensor-data:nth-child(2n) {
-        animation: wiggle .35s infinite;
+        animation: wiggle 0.35s infinite;
       }
 
       .dashboard__sensor-data:nth-child(2n-1) {
-        animation: reverse-wiggle .35s infinite;
+        animation: reverse-wiggle 0.35s infinite;
       }
 
       .dashboard__sensor-data-edit {
@@ -61,8 +61,8 @@
     }
 
     &-edit_blur {
-       backdrop-filter: blur(1px);
-     }
+      backdrop-filter: blur(1px);
+    }
   }
 
   &__sensor-label {
@@ -132,7 +132,8 @@
   border-radius: 50%;
   height: 14px;
   width: 14px;
-  &:before, &:after {
+  &:before,
+  &:after {
     box-sizing: border-box;
     border-style: solid;
     content: '';
@@ -157,16 +158,20 @@
 }
 
 .reload-icon-spin {
-  -webkit-animation: rotate-reload-icon .8s linear infinite;
-  animation: rotate-reload-icon .8s linear infinite;
+  -webkit-animation: rotate-reload-icon 0.8s linear infinite;
+  animation: rotate-reload-icon 0.8s linear infinite;
 }
 
 @-webkit-keyframes rotate-reload-icon {
-  100% { -webkit-transform: rotate(360deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes rotate-reload-icon {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes wiggle {

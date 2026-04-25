@@ -1,19 +1,17 @@
-/* eslint-disable no-magic-numbers */
-import { Inject, Injectable } from '@angular/core';
-import { NotifierService } from 'angular-notifier';
-import { Client, ConnectionOptions, ErrorWithInvocationContext, Message, MQTTError } from 'paho-mqtt';
+import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-  BehaviorSubject,
-  delay,
-  filter,
-  fromEvent,
-  Subject,
-  take,
-  takeUntil,
-} from 'rxjs';
+  Client,
+  ConnectionOptions,
+  ErrorWithInvocationContext,
+  Message,
+  MQTTError,
+} from 'paho-mqtt';
+import { fromEvent } from 'rxjs';
 
-import { WINDOW_OBJECT } from '../../app.module';
-import { AutoCloseable } from '../classes/auto-closable';
+import { WINDOW_OBJECT } from 'src/app/app.config';
+import { ToastService } from 'src/app/shared/services/toast.service';
+
 import { DashboardItemNames } from '../enums/dashboard-item-names';
 import { TimeStatuses } from '../enums/time-statuses';
 import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
@@ -23,81 +21,81 @@ import { getDefaultDashboardItemsSettings } from '../utils/default-dashboard-ite
 @Injectable({
   providedIn: 'root',
 })
-export class MqttService extends AutoCloseable {
-  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = new BehaviorSubject<MqttSensorsDataResponse | null>(null);
-  public updateTime$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public timerData$: BehaviorSubject<number> = new BehaviorSubject(0);
-  public hasInternetConnection$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public isEditDashboardModeEnabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public version$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public dashboardItemsSettings$: BehaviorSubject<DashboardItemsSettings> = new BehaviorSubject<DashboardItemsSettings>(
-    getDefaultDashboardItemsSettings());
+export class MqttService {
+  public readonly sensorsData: WritableSignal<MqttSensorsDataResponse | null> = signal(null);
+  public readonly updateTime: WritableSignal<string> = signal('');
+  public readonly timerData: WritableSignal<number> = signal(0);
+  public readonly hasInternetConnection: WritableSignal<boolean> = signal(false);
+  public readonly isEditDashboardModeEnabled: WritableSignal<boolean> = signal(false);
+  public readonly dashboardItemsSettings: WritableSignal<DashboardItemsSettings> = signal(
+    getDefaultDashboardItemsSettings(),
+  );
 
   private client: Client;
-  private mqttSettings: MqttSettings;
-  private destroyedTimerSource$: Subject<boolean> = new Subject<boolean>();
+  private mqttSettings: MqttSettings | null;
 
-  constructor(
-    private notifier: NotifierService,
-    @Inject(WINDOW_OBJECT) private window: Window,
-  ) {
-    super();
-  }
+  private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
+  private window: Window = inject(WINDOW_OBJECT);
 
   public setDashboardElementsSettings(): void {
-    const savedMqttSettings = this.getMqttSavedSettings();
-    const dashboardElementsVisibility = savedMqttSettings && JSON.parse(savedMqttSettings)?.dashboardItemsSettings
-      ? JSON.parse(savedMqttSettings)?.dashboardItemsSettings
-      : getDefaultDashboardItemsSettings();
+    const savedMqttSettings =
+      this.getMqttSavedSettings() &&
+      (JSON.parse(this.getMqttSavedSettings()!) as MqttSettings | null);
+    const dashboardElementsVisibility =
+      savedMqttSettings && savedMqttSettings?.dashboardItemsSettings
+        ? savedMqttSettings.dashboardItemsSettings
+        : getDefaultDashboardItemsSettings();
 
-    this.dashboardItemsSettings$.next(dashboardElementsVisibility);
+    this.dashboardItemsSettings.set(dashboardElementsVisibility);
   }
 
-  public updateDashboardElementsSettings(itemName: DashboardItemNames, settings: ItemSettings): void {
-    this.dashboardItemsSettings$.pipe(
-      take(1),
-    ).subscribe(dashboardItemsSettings => {
-      dashboardItemsSettings[itemName] = { ...settings };
-      this.dashboardItemsSettings$.next(dashboardItemsSettings);
-    });
+  public updateDashboardElementsSettings(
+    itemName: DashboardItemNames,
+    settings: ItemSettings,
+  ): void {
+    this.dashboardItemsSettings.update((dashboardSettings) => ({
+      ...dashboardSettings,
+      [itemName]: { ...settings },
+    }));
   }
 
   public saveDashboardElementsSettings(): void {
     const settings: MqttSettings = {
-      ...this.mqttSettings,
+      ...this.mqttSettings!,
       dashboardItemsSettings: {
-        ...this.dashboardItemsSettings$.value,
+        ...this.dashboardItemsSettings(),
       },
     };
     localStorage.setItem('mqtt_seting', JSON.stringify(settings));
   }
 
   public toggleDashboardEditMode(): void {
-    const isEditable = this.isEditDashboardModeEnabled$.value;
-    this.isEditDashboardModeEnabled$.next(!isEditable);
+    this.isEditDashboardModeEnabled.update((isEditable) => !isEditable);
   }
 
   public listenInternetConnection(): void {
     const isOnline = this.window.navigator.onLine;
-    this.hasInternetConnection$.next(isOnline);
-
+    this.hasInternetConnection.set(isOnline);
+    console.log(isOnline);
     if (!isOnline) {
-      this.notifier.notify('warning', ' Интернет соединение отсутствует');
+      this.toastService.showToast('Интернет соединение отсутствует', 'warning');
     }
 
-    fromEvent(this.window, 'online').pipe(
-      takeUntil(this.destroyedSource),
-    ).subscribe(() => {
-      this.hasInternetConnection$.next(true);
-      this.notifier.notify('success', 'Интернет соединение установлено');
-      this.connect();
-    });
-    fromEvent(this.window, 'offline').pipe(
-      takeUntil(this.destroyedSource),
-    ).subscribe(() => {
-      this.hasInternetConnection$.next(false);
-      this.notifier.notify('warning', ' Интернет соединение потеряно');
-    });
+    fromEvent(this.window, 'online')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.hasInternetConnection.set(true);
+        this.toastService.showToast('Интернет соединение установлено', 'success');
+        this.connect();
+      });
+    fromEvent(this.window, 'offline')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        console.log('offline');
+        this.hasInternetConnection.set(false);
+        this.toastService.showToast('Интернет соединение потеряно', 'warning');
+      });
   }
 
   public updateSensorsData(): void {
@@ -110,7 +108,7 @@ export class MqttService extends AutoCloseable {
 
   public clearMqttConnectionSettings(): void {
     localStorage.removeItem('mqtt_seting');
-    this.sensorsData$.next(null);
+    this.sensorsData.set(null);
 
     if (this.client) {
       this.client.disconnect();
@@ -124,77 +122,74 @@ export class MqttService extends AutoCloseable {
 
   public connect(): void {
     const savedMqttSettings = this.getMqttSavedSettings();
-    this.mqttSettings = savedMqttSettings ? JSON.parse(savedMqttSettings) : null;
+    this.mqttSettings = savedMqttSettings ? (JSON.parse(savedMqttSettings) as MqttSettings) : null;
 
-    if (this.mqttSettings) {
+    if (this.mqttSettings?.server && this.mqttSettings?.port) {
       this.initClient();
-    }
-
-    if (!this.mqttSettings) {
-      return;
     }
   }
 
   public setTimerData(): void {
-    this.sensorsData$.pipe(
-      filter<MqttSensorsDataResponse | null>(Boolean),
-      takeUntil(this.destroyedSource),
-    ).subscribe(sensorsData => {
-      this.timerData$.next(sensorsData?.time?.[TimeStatuses.Timer] || 0);
-      this.destroyedTimerSource$.next(true);
-      this.updateTimer();
-    });
+    if (!this.sensorsData()) return;
+
+    this.timerData.set(this.sensorsData()?.time?.[TimeStatuses.Timer] ?? 0);
+    this.updateTimer();
   }
 
   public sendCommand(command: string): void {
     const message_pub = new Message(command);
-    message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
+    message_pub.destinationName = `${this.mqttSettings!.topic}/sub`;
     this.client.send(message_pub);
   }
 
   public setTimer(seconds: number): void {
     const message_pub = new Message(`timer=${seconds}`);
-    message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
+    message_pub.destinationName = `${this.mqttSettings!.topic}/sub`;
     this.client.send(message_pub);
   }
 
   private initClient(): void {
-    this.client = new Client(this.mqttSettings.server, Number(this.mqttSettings.port), `web_${ parseInt(`${Math.random() * 100}`, 10)}`);
+    this.client = new Client(
+      this.mqttSettings!.server,
+      Number(this.mqttSettings!.port),
+      `web_${parseInt(`${Math.random() * 100}`, 10)}`,
+    );
     this.client.onConnectionLost = this.onConnectionLost;
     this.client.onMessageArrived = this.onMessageArrived;
     this.client.connect(this.getConnectionOptions());
   }
 
   private onConnect = () => {
-    this.notifier.notify('success', 'Соединение с брокером установлено');
-    this.client.subscribe(`${this.mqttSettings.topic}/pub`);
+    this.toastService.showToast('Соединение с брокером установлено', 'success');
+    this.client.subscribe(`${this.mqttSettings!.topic}/pub`);
     const message_pub = new Message('update');
-    message_pub.destinationName = `${this.mqttSettings.topic}/sub`;
+    message_pub.destinationName = `${this.mqttSettings!.topic}/sub`;
     this.client.send(message_pub);
   };
 
   private onConnectionLost = (resObject: MQTTError) => {
     if (resObject.errorCode === 0) {
-      this.notifier.notify('warning', `${resObject.errorCode}:${resObject.errorMessage}`);
+      this.toastService.showToast(`${resObject.errorCode}:${resObject.errorMessage}`, 'warning');
     } else {
-      this.notifier.notify('error', `${resObject.errorCode}:${resObject.errorMessage}`);
+      this.toastService.showToast(`${resObject.errorCode}:${resObject.errorMessage}`, 'danger');
     }
   };
 
   private onMessageArrived = (message: Message) => {
-    this.updateTime$.next(new Date().toTimeString().slice(0, 8));
-    this.sensorsData$.next(JSON.parse(message.payloadString));
+    this.updateTime.set(new Date().toTimeString().slice(0, 8));
+    this.sensorsData.set(JSON.parse(message.payloadString) as MqttSensorsDataResponse | null);
+    this.setTimerData();
   };
 
   private onFailure = (message: ErrorWithInvocationContext) => {
-    this.notifier.notify('error', `${message.errorCode}:${message.errorMessage}`);
+    this.toastService.showToast(`${message.errorCode}:${message.errorMessage}`, 'danger');
   };
 
   private getConnectionOptions(): ConnectionOptions {
     return {
-      useSSL:true,
-      userName: this.mqttSettings.user,
-      password: this.mqttSettings.pass,
+      useSSL: true,
+      userName: this.mqttSettings!.user,
+      password: this.mqttSettings!.pass,
       onSuccess: this.onConnect,
       onFailure: this.onFailure,
     };
@@ -202,12 +197,12 @@ export class MqttService extends AutoCloseable {
 
   private updateTimer(): void {
     const oneSecond = 1000;
-    this.timerData$.pipe(
-      delay(oneSecond),
-      filter(timerData => timerData > 0),
-      takeUntil(this.destroyedTimerSource$),
-    ).subscribe(v => {
-      this.timerData$.next(--v);
-    });
+
+    if (this.timerData() > 0) {
+      this.timerData.update((timer) => --timer);
+      return;
+    }
+
+    setTimeout(() => this.updateTimer(), oneSecond);
   }
 }

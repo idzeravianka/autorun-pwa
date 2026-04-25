@@ -1,50 +1,54 @@
 <ion-content>
-  <div class="settings" [formGroup]="settingsForm" *ngIf="!!settingsForm">
-    <div class="settings__title">Настройки</div>
-    <ion-list class="settings__field">
-      <ion-input
-        formControlName="server"
-        placeholder="srv2.clusterfly.ru"
-        label="Сервер (MQTT broker):"
-        labelPlacement="floating"
-        [errorText]="('' | getErrorText : settingsForm.controls.server) | async"
-      ></ion-input>
-      <ion-input
-        formControlName="port"
-        placeholder="9994"
-        label="Порт (MQTT port):"
-        labelPlacement="floating"
-        [errorText]="('' | getErrorText : settingsForm.controls.port) | async"
-      ></ion-input>
-      <ion-input
-        formControlName="user"
-        placeholder="user"
-        label="Логин (MQTT user):"
-        labelPlacement="floating"
-        [errorText]="('' | getErrorText : settingsForm.controls.user) | async"
-      ></ion-input>
-      <ion-input
-        type="password"
-        formControlName="pass"
-        placeholder="qwerty"
-        label="Пароль (MQTT password):"
-        labelPlacement="floating"
-        [errorText]="('' | getErrorText : settingsForm.controls.pass) | async"
-      ></ion-input>
-      <ion-input
-        formControlName="topic"
-        placeholder="user_12345678/c5"
-        label="Префикс топика (prefix):"
-        labelPlacement="floating"
-        [errorText]="('' | getErrorText : settingsForm.controls.topic) | async"
-      ></ion-input>
-    </ion-list>
-    <div class="settings__field">
-      <ion-button fill="outline" class="settings__button" (click)="showConfirmationDialog()">Очистить</ion-button>
-      <ion-button class="settings__button" (click)="saveSettings()">Сохранить</ion-button>
+  @if (!!settingsForm) {
+    <div class="settings" [formGroup]="settingsForm">
+      <div class="settings__title">Настройки</div>
+      <ion-list class="settings__field">
+        <ion-input
+          formControlName="server"
+          placeholder="srv2.clusterfly.ru"
+          label="Сервер (MQTT broker):"
+          labelPlacement="floating"
+          [errorText]="('' | getErrorText: settingsForm.controls['server'] | async)!"
+        ></ion-input>
+        <ion-input
+          formControlName="port"
+          placeholder="9994"
+          label="Порт (MQTT port):"
+          labelPlacement="floating"
+          [errorText]="('' | getErrorText: settingsForm.controls['port'] | async)!"
+        ></ion-input>
+        <ion-input
+          formControlName="user"
+          placeholder="user"
+          label="Логин (MQTT user):"
+          labelPlacement="floating"
+          [errorText]="('' | getErrorText: settingsForm.controls['user'] | async)!"
+        ></ion-input>
+        <ion-input
+          type="password"
+          formControlName="pass"
+          placeholder="qwerty"
+          label="Пароль (MQTT password):"
+          labelPlacement="floating"
+          [errorText]="('' | getErrorText: settingsForm.controls['pass'] | async)!"
+        ></ion-input>
+        <ion-input
+          formControlName="topic"
+          placeholder="user_12345678/c5"
+          label="Префикс топика (prefix):"
+          labelPlacement="floating"
+          [errorText]="('' | getErrorText: settingsForm.controls['topic'] | async)!"
+        ></ion-input>
+      </ion-list>
+      <div class="settings__field">
+        <ion-button fill="outline" class="settings__button" (click)="showConfirmationDialog()"
+          >Очистить</ion-button
+        >
+        <ion-button class="settings__button" (click)="saveSettings()">Сохранить</ion-button>
+      </div>
+      <div class="settings__prompt">
+        Рекомендуемые MQTT сервера: wqtt.ru, clusterfly.ru, cloudmqtt.com.
+      </div>
     </div>
-    <div class="settings__prompt">
-      Рекомендуемые MQTT сервера: wqtt.ru, clusterfly.ru, cloudmqtt.com.
-    </div>
-  </div>
+  }
 </ion-content>

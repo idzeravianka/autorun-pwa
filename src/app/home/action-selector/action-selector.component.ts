@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, filter, skip, take } from 'rxjs';
+import { Component, inject, Signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { filter, skip, take } from 'rxjs';
+
+import { HoldButtonComponent } from 'src/app/shared/components/hold-button/hold-button.component';
 
 import { MqttCommands } from '../../core/enums/mqtt-commands';
 import { MqttSensorsDataResponse } from '../../core/interfaces/mqtt-sensors-data-response';
@@ -25,25 +30,25 @@ const actions: { value: string; viewValue: string }[] = [
   selector: 'az-action-selector',
   templateUrl: './action-selector.component.html',
   styleUrls: ['./action-selector.component.scss'],
+  standalone: true,
+  imports: [IonicModule, HoldButtonComponent, FormsModule],
 })
 export class ActionSelectorComponent {
-  public hasInternetConnection$: BehaviorSubject<boolean> = this.mqttService.hasInternetConnection$;
-  public sensorsData$: BehaviorSubject<MqttSensorsDataResponse | null> = this.mqttService.sensorsData$;
+  public hasInternetConnection: Signal<boolean> = this.mqttService.hasInternetConnection;
+  public sensorsData: Signal<MqttSensorsDataResponse | null> = this.mqttService.sensorsData;
   public actions: { value: string; viewValue: string }[] = actions;
-  public selectedAction = actions[0].value;
+  public selectedAction = actions[0]!.value;
   public isLoading: boolean;
 
-  constructor(private mqttService: MqttService) {}
+  private mqttService: MqttService = inject(MqttService);
 
   public sendCommand(): void {
     this.mqttService.sendCommand(this.selectedAction);
     this.isLoading = true;
-    this.mqttService.sensorsData$.pipe(
-      skip(1),
-      filter<MqttSensorsDataResponse | null>(Boolean),
-      take(1),
-    ).subscribe(() => {
-      this.isLoading = false;
-    });
+    toObservable(this.mqttService.sensorsData)
+      .pipe(skip(1), filter<MqttSensorsDataResponse | null>(Boolean), take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 }
