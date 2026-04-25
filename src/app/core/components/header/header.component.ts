@@ -15,16 +15,9 @@ import { MqttService } from '../../services/mqtt.service';
   standalone: true,
 })
 export class HeaderComponent implements OnInit {
-  public isSettingsOpen$: Observable<boolean> = this.router.events.pipe(
-    skip(1),
-    filter((event) => event instanceof NavigationEnd),
-    map((event: NavigationEnd) => event.url.includes('settings')),
-  );
-  public isCoreRoute$: Observable<boolean> = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    map((event: NavigationEnd) => event.url === '/' || event.url.includes('home')),
-  );
-  public isEditDashboardModeEnabled: Signal<boolean> = this.mqttService.isEditDashboardModeEnabled;
+  public isSettingsOpen$: Observable<boolean>;
+  public isCoreRoute$: Observable<boolean>;
+  public isEditDashboardModeEnabled: Signal<boolean>;
 
   private navigationHistory: string[] = [];
 
@@ -33,6 +26,20 @@ export class HeaderComponent implements OnInit {
   private location: Location = inject(Location);
   private navController: NavController = inject(NavController);
   private mqttService: MqttService = inject(MqttService);
+
+  constructor() {
+    this.isSettingsOpen$ = this.router.events.pipe(
+      skip(1),
+      filter((event) => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => event.url.includes('settings')),
+    );
+    this.isCoreRoute$ = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => event.url === '/' || event.url.includes('home')),
+    );
+
+    this.isEditDashboardModeEnabled = this.mqttService.isEditDashboardModeEnabled;
+  }
 
   public ngOnInit(): void {
     this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {

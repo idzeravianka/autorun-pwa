@@ -34,13 +34,18 @@ const actions: { value: string; viewValue: string }[] = [
   imports: [IonicModule, HoldButtonComponent, FormsModule],
 })
 export class ActionSelectorComponent {
-  public hasInternetConnection: Signal<boolean> = this.mqttService.hasInternetConnection;
-  public sensorsData: Signal<MqttSensorsDataResponse | null> = this.mqttService.sensorsData;
+  public hasInternetConnection: Signal<boolean>;
+  public sensorsData: Signal<MqttSensorsDataResponse | null>;
   public actions: { value: string; viewValue: string }[] = actions;
   public selectedAction = actions[0]!.value;
   public isLoading: boolean;
 
   private mqttService: MqttService = inject(MqttService);
+
+  constructor() {
+    this.hasInternetConnection = this.mqttService.hasInternetConnection;
+    this.sensorsData = this.mqttService.sensorsData;
+  }
 
   public sendCommand(): void {
     this.mqttService.sendCommand(this.selectedAction);

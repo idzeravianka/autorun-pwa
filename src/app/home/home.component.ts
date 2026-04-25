@@ -39,20 +39,20 @@ import { ToastService } from '../shared/services/toast.service';
 export class HomePageComponent {
   @ViewChild('popover') popover: IonPopover;
 
-  public updateTime: Signal<string> = this.mqttService.updateTime;
-  public sensorsData: Signal<MqttSensorsDataResponse | null> = this.mqttService.sensorsData;
-  public hasInternetConnection: Signal<boolean> = this.mqttService.hasInternetConnection;
-  public dashboardItemsSettings: Signal<DashboardItemsSettings> =
-    this.mqttService.dashboardItemsSettings;
+  public updateTime: Signal<string>;
+  public sensorsData: Signal<MqttSensorsDataResponse | null>;
+  public hasInternetConnection: Signal<boolean>;
+  public dashboardItemsSettings: Signal<DashboardItemsSettings>;
+  public isEditDashboardModeEnabled: Signal<boolean>;
+  public timerData: Signal<number>;
+
   public pinStatuses: typeof PinStatuses = PinStatuses;
   public temperatureStatuses: typeof TemperatureStatuses = TemperatureStatuses;
   public timeStatuses: typeof TimeStatuses = TimeStatuses;
   public dashboardItemNames: typeof DashboardItemNames = DashboardItemNames;
-  public isEditDashboardModeEnabled: Signal<boolean> = this.mqttService.isEditDashboardModeEnabled;
   public isTimerSetInProgress: boolean;
   public isTimerSettingOpen: boolean;
   public timerValue = 0;
-  public timerData: Signal<number> = this.mqttService.timerData;
 
   private mqttService: MqttService = inject(MqttService);
   private modalCtrl: ModalController = inject(ModalController);
@@ -60,6 +60,12 @@ export class HomePageComponent {
 
   constructor() {
     addIcons({ createOutline, create, closeOutline });
+    this.updateTime = this.mqttService.updateTime;
+    this.sensorsData = this.mqttService.sensorsData;
+    this.hasInternetConnection = this.mqttService.hasInternetConnection;
+    this.dashboardItemsSettings = this.mqttService.dashboardItemsSettings;
+    this.isEditDashboardModeEnabled = this.mqttService.isEditDashboardModeEnabled;
+    this.timerData = this.mqttService.timerData;
   }
 
   public async openItemEditModalFor(sensorName: DashboardItemNames): Promise<void> {
