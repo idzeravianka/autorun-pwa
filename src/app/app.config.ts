@@ -14,6 +14,7 @@ import { routes } from './app.routes';
 import { PwaPromptService } from './core/services/pwa-prompt.service';
 
 export const WINDOW_OBJECT = new InjectionToken<Window>('WindowObject');
+export const LOCAL_STORAGE = new InjectionToken<Storage>('LocalStorage');
 
 const initializePWAPrompt = () => {
   const pwaService = inject(PwaPromptService);
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: WINDOW_OBJECT, useValue: window },
+    { provide: LOCAL_STORAGE, useValue: localStorage },
     provideAppInitializer(initializePWAPrompt),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideServiceWorker('ngsw-worker.js', {

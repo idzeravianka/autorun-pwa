@@ -10,10 +10,15 @@ import {
   IonBackButton,
   IonIcon,
   NavController,
+  IonSelect,
+  IonSelectOption,
+  IonItem,
 } from '@ionic/angular/standalone';
 import { filter, map, Observable, skip } from 'rxjs';
 
+import { UserSettings } from './core/interfaces/mqtt-settings';
 import { MqttService } from './core/services/mqtt.service';
+import { UserSettingsService } from './core/services/user-settings.service';
 
 @Component({
   selector: 'az-root',
@@ -30,6 +35,9 @@ import { MqttService } from './core/services/mqtt.service';
     CommonModule,
     IonBackButton,
     IonIcon,
+    IonSelect,
+    IonSelectOption,
+    IonItem,
   ],
   host: {
     '(document:visibilitychange)': 'onVisibilityChange()',
@@ -39,6 +47,7 @@ export class AppComponent implements OnInit {
   public isSettingsOpen$: Observable<boolean>;
   public isCoreRoute$: Observable<boolean>;
   public isEditDashboardModeEnabled: Signal<boolean>;
+  public userSettings: Signal<UserSettings | null>;
 
   private navigationHistory: string[] = [];
 
@@ -47,6 +56,7 @@ export class AppComponent implements OnInit {
   private location: Location = inject(Location);
   private navController: NavController = inject(NavController);
   private mqttService: MqttService = inject(MqttService);
+  private userSettingsService: UserSettingsService = inject(UserSettingsService);
 
   constructor() {
     this.isSettingsOpen$ = this.router.events.pipe(
@@ -60,10 +70,12 @@ export class AppComponent implements OnInit {
     );
 
     this.isEditDashboardModeEnabled = this.mqttService.isEditDashboardModeEnabled;
+    this.userSettings = this.userSettingsService.userSettings;
   }
 
   ngOnInit() {
     // this.newVersionPromptService.checkAppVersion();
+    this.userSettingsService.loadAllSettings();
     this.mqttService.setDashboardElementsSettings();
     this.mqttService.listenInternetConnection();
     if (this.mqttService.hasInternetConnection()) {
@@ -101,5 +113,10 @@ export class AppComponent implements OnInit {
       this.mqttService.saveDashboardElementsSettings();
     }
     this.mqttService.toggleDashboardEditMode();
+  }
+
+  public onCarChange(event: CustomEvent): void {
+    this.userSettingsService.changeSelectedEntity(event.detail.value as string);
+    this.mqttService.reconnect();
   }
 }

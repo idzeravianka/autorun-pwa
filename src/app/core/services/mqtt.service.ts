@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { DestroyRef, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   Client,
@@ -12,11 +12,18 @@ import { fromEvent } from 'rxjs';
 import { WINDOW_OBJECT } from 'src/app/app.config';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
+import { UserSettingsService } from './user-settings.service';
 import { DashboardItemNames } from '../enums/dashboard-item-names';
 import { TimeStatuses } from '../enums/time-statuses';
 import { MqttSensorsDataResponse } from '../interfaces/mqtt-sensors-data-response';
-import { DashboardItemsSettings, ItemSettings, MqttSettings } from '../interfaces/mqtt-settings';
+import {
+  DashboardItemsSettings,
+  ItemSettings,
+  MqttSettings,
+  UserSettings,
+} from '../interfaces/mqtt-settings';
 import { getDefaultDashboardItemsSettings } from '../utils/default-dashboard-items-settings';
+import { generateId } from '../utils/generate-id';
 
 @Injectable({
   providedIn: 'root',
@@ -34,18 +41,17 @@ export class MqttService {
   private client: Client;
   private mqttSettings: MqttSettings | null;
 
+  private userSettingsService: UserSettingsService = inject(UserSettingsService);
   private destroyRef = inject(DestroyRef);
   private toastService = inject(ToastService);
   private window: Window = inject(WINDOW_OBJECT);
 
+  private userSettings: Signal<UserSettings | null> = this.userSettingsService.userSettings;
+
   public setDashboardElementsSettings(): void {
-    const savedMqttSettings =
-      this.getMqttSavedSettings() &&
-      (JSON.parse(this.getMqttSavedSettings()!) as MqttSettings | null);
+    const savedMqttSettings = this.userSettingsService.selectedCarSettings();
     const dashboardElementsVisibility =
-      savedMqttSettings && savedMqttSettings?.dashboardItemsSettings
-        ? savedMqttSettings.dashboardItemsSettings
-        : getDefaultDashboardItemsSettings();
+      savedMqttSettings?.dashboardItemsSettings ?? getDefaultDashboardItemsSettings();
 
     this.dashboardItemsSettings.set(dashboardElementsVisibility);
   }
@@ -61,13 +67,15 @@ export class MqttService {
   }
 
   public saveDashboardElementsSettings(): void {
-    const settings: MqttSettings = {
-      ...this.mqttSettings!,
-      dashboardItemsSettings: {
-        ...this.dashboardItemsSettings(),
-      },
-    };
-    localStorage.setItem('mqtt_seting', JSON.stringify(settings));
+    if (!this.userSettings()) return;
+    this.userSettingsService.saveSettings({
+      ...this.userSettings()!,
+      savedEntities: this.userSettings()!.savedEntities.map((entity) =>
+        entity.id === this.userSettings()?.selectedEntityId
+          ? { ...entity, dashboardItemsSettings: this.dashboardItemsSettings() }
+          : entity,
+      ),
+    });
   }
 
   public toggleDashboardEditMode(): void {
@@ -102,31 +110,45 @@ export class MqttService {
     this.connect();
   }
 
-  public getMqttSavedSettings(): string | null {
-    return localStorage.getItem('mqtt_seting');
-  }
-
-  public clearMqttConnectionSettings(): void {
-    localStorage.removeItem('mqtt_seting');
-    this.sensorsData.set(null);
-
-    if (this.client) {
-      this.client.disconnect();
-    }
-  }
-
   public saveMqttSettings(settings: MqttSettings): void {
-    localStorage.setItem('mqtt_seting', JSON.stringify(settings));
+    const entityId = generateId();
+    const savedSettings = this.userSettings() ?? {
+      selectedEntityId: null,
+      savedEntities: [],
+    };
+    this.userSettingsService.saveSettings({
+      ...savedSettings,
+      selectedEntityId: entityId,
+      savedEntities: [...savedSettings.savedEntities, { ...settings, id: entityId }],
+    });
+
+    this.reconnect();
+  }
+
+  public updateMqttSettings(entityId: string, settings: MqttSettings): void {
+    this.userSettingsService.saveSettings({
+      ...this.userSettings()!,
+      savedEntities: this.userSettings()!.savedEntities.map((entity) =>
+        entity.id === entityId ? { ...settings, id: entityId } : entity,
+      ),
+    });
     this.connect();
   }
 
   public connect(): void {
-    const savedMqttSettings = this.getMqttSavedSettings();
-    this.mqttSettings = savedMqttSettings ? (JSON.parse(savedMqttSettings) as MqttSettings) : null;
+    this.mqttSettings = this.userSettingsService.selectedCarSettings();
 
     if (this.mqttSettings?.server && this.mqttSettings?.port) {
       this.initClient();
     }
+  }
+
+  public reconnect(): void {
+    this.sensorsData.set(null);
+    if (this.client?.isConnected()) {
+      this.client.disconnect();
+    }
+    this.connect();
   }
 
   public setTimerData(): void {

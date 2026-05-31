@@ -14,7 +14,15 @@
           ></ion-icon>
         }
       </div>
-      <div class="title">Анатомия автозапуска</div>
+      @if (isCoreRoute$ | async) {
+        <ion-item class="entity-select">
+          <ion-select interface="action-sheet" placeholder="Выберите авто" [value]="userSettings()?.selectedEntityId" (ionChange)="onCarChange($event)">
+            @for (car of userSettings()?.savedEntities; track car.id) {
+              <ion-select-option [value]="car.id">{{ car.name }}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+      }
       <div class="gears-container">
         <div
           class="gear-rotate"

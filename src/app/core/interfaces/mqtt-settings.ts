@@ -1,6 +1,13 @@
 import { DashboardItemNames } from '../enums/dashboard-item-names';
 
+export interface UserSettings {
+  savedEntities: MqttSettings[];
+  selectedEntityId: string | null;
+}
+
 export interface MqttSettings {
+  id?: string;
+  name?: string;
   server: string;
   port: string;
   user: string;

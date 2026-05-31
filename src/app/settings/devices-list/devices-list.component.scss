@@ -1,0 +1,29 @@
+@import '../../../theme/colors';
+
+.devices-list-wrapper {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.device-list-item {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 50px;
+}
+
+.add-new-device-label {
+  padding-left: .625rem;
+}
+
+:host::ng-deep {
+  & ion-item::part(inner), ion-item::part(native) {
+    padding: 0 !important;
+  }
+}

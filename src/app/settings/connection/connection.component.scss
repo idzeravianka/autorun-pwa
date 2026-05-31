@@ -24,15 +24,7 @@
   }
 
   &__button {
-    width: 46%;
-
-    &:first-child {
-      margin-right: 2%;
-    }
-
-    &:last-child {
-      margin-left: 2%;
-    }
+    width: 100%;
   }
 
   &__prompt {

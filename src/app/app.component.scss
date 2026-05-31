@@ -153,3 +153,17 @@
 ion-back-button {
   display: block;
 }
+
+ion-item.entity-select {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+.entity-select ion-select {
+  --placeholder-color: $white;
+  --placeholder-opacity: .8;
+
+  &::part(inner), &::part(icon) {
+    color: $white;
+  }
+}
