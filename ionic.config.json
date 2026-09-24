@@ -1,7 +1,0 @@
-{
-  "name": "autorun-pwa",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

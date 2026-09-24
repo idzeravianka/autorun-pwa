@@ -1,0 +1,24 @@
+{
+  "name": "EngineSTART",
+  "short_name": "EngineSTART",
+  "description": "Приложение для управления автозапуском двигателя",
+  "start_url": "/autorun-pwa",
+  "scope": "/autorun-pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icons/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
