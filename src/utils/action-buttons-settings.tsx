@@ -52,11 +52,11 @@ export const defaultQuickActionButtonsSettings: IActionButton[] = [
         onAction: (topic, command) => sendCommand(topic, command),
     },
     {
-        label: "Стартер 2.5 сек",
+        label: "Стартер",
         isVisible: true,
         icon: <BoltIcon />,
-        command: () => MqttCommands.StarterCrankTime2And5Sec,
-        onAction: (topic, command) => sendCommand(topic, command),
+        command: () => MqttCommands.StarterCrankTime,
+        onAction: () => {},
     },
     {
         label: "WI-FI ВКЛ",

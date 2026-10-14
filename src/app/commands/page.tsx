@@ -2,17 +2,24 @@
 
 import PageContainer from "@/src/components/PageContainer";
 import {Box, Grid, Typography} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {useSettingsStore} from "@/src/utils/user-settings-store";
 import {defaultQuickActionButtonsSettings} from "@/src/utils/action-buttons-settings";
 import {ActionButton} from "@/src/components/ActionButton";
 import {VERTICAL_CENTERING} from "@/src/const/common-sx-styles";
+import {StarterDrawer} from "@/src/components/StarterDrawer";
 
 export default function Commands() {
+    const [isStarterDrawerOpen, setIsStarterDrawerOpen] = useState(false);
+
     const mqttData = useSettingsStore((state) => state.mqttData);
     const activeCar = useSettingsStore(state => state.getActiveCar());
     const isConnected = useSettingsStore(state => state.mqttStatus === 'connected');
     const mqttDataUpdateTime = useSettingsStore((state) => state.mqttDataUpdateTime);
+
+    const onTimerClick = () => {
+        setIsStarterDrawerOpen(true);
+    }
 
     return (
         <PageContainer customSx={VERTICAL_CENTERING}>
@@ -46,7 +53,9 @@ export default function Commands() {
                 {defaultQuickActionButtonsSettings.map((setting, index) => {
                     return (
                         <Grid size={4} key={index}>
-                            <ActionButton onAction={() => setting.onAction(activeCar!.topic, setting.command(mqttData))}
+                            <ActionButton onAction={() => {
+                                setting.label === 'Стартер' ? onTimerClick() : setting.onAction(activeCar!.topic, setting.command(mqttData))
+                            }}
                                           icon={setting.icon}
                                           disabled={!activeCar || !mqttData.pin.length}
                                           label={setting.label}
@@ -55,6 +64,7 @@ export default function Commands() {
                     )
                 })}
             </Grid>
+            <StarterDrawer isOpen={isStarterDrawerOpen} onClose={() => setIsStarterDrawerOpen(false)}/>
         </PageContainer>
     );
 }

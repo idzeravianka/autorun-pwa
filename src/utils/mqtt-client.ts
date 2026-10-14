@@ -55,7 +55,7 @@ export const getMqttClient = (activeCar: MqttSettings, onMessageCallback: (senso
     return client;
 };
 
-export const sendCommand = (topic: string, message: MqttCommands | `timer=${number}`) => {
+export const sendCommand = (topic: string, message: MqttCommands | `timer=${number}` | `${MqttCommands.StarterCrankTime}${number}`) => {
     if (client?.connected) {
         client.publish(`${topic}/sub`, message, { qos: 1 });
     }
