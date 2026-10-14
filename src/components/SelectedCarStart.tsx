@@ -42,7 +42,7 @@ export default function RemoteStart({car, sensorsData}: {
             setIsHolding(false);
             setIsStartStopExecuting(() => true);
             if (sensorsData.pin?.[PinStatuses.K2] === 0) {
-                sendCommand(car.topic, MqttCommands.StartEngine)
+                sendCommand(car.topic, car.customCommandsToSend?.startEngine ?? MqttCommands.StartEngine)
             }
             if (sensorsData.pin?.[PinStatuses.K2] === 1) {
                 sendCommand(car.topic, MqttCommands.StopEngine)

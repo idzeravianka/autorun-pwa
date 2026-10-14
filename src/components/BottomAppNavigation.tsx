@@ -17,6 +17,7 @@ export default function BottomAppNavigation() {
         if (/\/sensors(\/|$)/.test(pathname)) return 'Sensors';
         if (/\/commands(\/|$)/.test(pathname)) return 'Commands';
         if (/\/connections(\/|$)/.test(pathname)) return 'Connections';
+        if (/\/commands-edit(\/|$)/.test(pathname)) return 'Commands Edit';
         return 'Home';
     };
 

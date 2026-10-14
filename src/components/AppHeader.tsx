@@ -11,6 +11,7 @@ const HEADER_LABEL_CONFIG = {
     '/': <CarSwitcher/>,
     '/connections': 'Список автомобилей',
     '/connections/setup-connection': 'Настройки устройства',
+    '/commands-edit': 'Настройки команд',
     '/sensors': <CarSwitcher/>,
     '/commands': <CarSwitcher/>,
 }
@@ -36,7 +37,7 @@ export default function AppHeader() {
                 fontSize: '16px'
             }}>
             {HEADER_LABEL_CONFIG[pathname]}
-            {!pathname.includes('connections') && <MenuIcon sx={{fontSize: '28px'}} onClick={() => setOpen(true)}/>}
+            {!pathname.includes('connections') && !pathname.includes('commands-edit') && <MenuIcon sx={{fontSize: '28px'}} onClick={() => setOpen(true)}/>}
             <SettingsDrawer isOpen={open} onClose={() => setOpen(false)} />
         </Box>
     )

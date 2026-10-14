@@ -11,13 +11,14 @@ import {CarSettingsDrawer} from "@/src/components/CarSettingsDrawer";
 
 interface CarListProps {
     cars: MqttSettings[];
+    onCommandsEdit: (id: string) => void;
     onSendSettingsToController: (carSettings: MqttSettings) => void;
     onEdit: (id: string) => void;
     onRemove: (id: string) => void;
     onAddNew: () => void;
 }
 
-export default function CarList({cars, onEdit, onRemove, onAddNew, onSendSettingsToController}: CarListProps) {
+export default function CarList({cars, onEdit, onRemove, onAddNew, onSendSettingsToController, onCommandsEdit}: CarListProps) {
     const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
     return (
         <Box sx={{bgcolor: 'plat.bg'}}>
@@ -88,8 +89,12 @@ export default function CarList({cars, onEdit, onRemove, onAddNew, onSendSetting
                 Добавить автомобиль
             </Button>
             {!!selectedCarId &&
-                <CarSettingsDrawer carId={selectedCarId} onClose={() => setSelectedCarId(null)} onEdit={onEdit}
-                                   onRemove={onRemove} onSendSettings={onSendSettingsToController}></CarSettingsDrawer>
+                <CarSettingsDrawer carId={selectedCarId}
+                                   onClose={() => setSelectedCarId(null)}
+                                   onEdit={onEdit}
+                                   onRemove={onRemove}
+                                   onSendSettings={onSendSettingsToController}
+                                   onCommandsEdit={onCommandsEdit} />
             }
         </Box>
     );

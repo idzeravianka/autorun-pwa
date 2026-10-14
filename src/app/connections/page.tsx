@@ -23,6 +23,7 @@ export default function Connections() {
     }
     const handleEditCar = (id: string) => router.push(`/connections/setup-connection?id=${id}`);
     const handleAddNewCar = () => router.push(`/connections/setup-connection?id=new`);
+    const handleCommandsEdit = (id: string) => router.push(`/commands-edit?id=${id}`);
 
     const handleRemoveCarRequest = (id: string) => {
         setCarToDelete(id);
@@ -38,7 +39,10 @@ export default function Connections() {
 
     return (
         <PageContainer customSx={VERTICAL_CENTERING}>
-            <CarList cars={cars} onSendSettingsToController={handleSendSettingsToController} onEdit={handleEditCar}
+            <CarList cars={cars}
+                     onCommandsEdit={handleCommandsEdit}
+                     onSendSettingsToController={handleSendSettingsToController}
+                     onEdit={handleEditCar}
                      onRemove={handleRemoveCarRequest}
                      onAddNew={handleAddNewCar}/>
             <ConfirmDialog

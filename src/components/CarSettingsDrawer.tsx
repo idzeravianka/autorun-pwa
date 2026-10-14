@@ -5,12 +5,14 @@ import {useSettingsStore} from "@/src/utils/user-settings-store";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
+import KeyboardCommandKeyIcon from '@mui/icons-material/KeyboardCommandKey';
 import {POINT_CUTTING} from "@/src/const/common-sx-styles";
 import {MqttSettings} from "@/src/types/interfaces/mqtt-settings";
 
-export function CarSettingsDrawer({carId, onClose, onEdit, onRemove, onSendSettings}: {
+export function CarSettingsDrawer({carId, onClose, onEdit, onRemove, onSendSettings, onCommandsEdit}: {
     carId: string,
     onClose: () => void,
+    onCommandsEdit: (carId: string) => void,
     onEdit: (carId: string) => void,
     onRemove: (carId: string) => void,
     onSendSettings: (carId: MqttSettings) => void
@@ -34,6 +36,11 @@ export function CarSettingsDrawer({carId, onClose, onEdit, onRemove, onSendSetti
 
     const removeSettings = () => {
         onRemove(carId);
+        onClose();
+    }
+
+    const commandsEdit = () => {
+        onCommandsEdit(carId);
         onClose();
     }
 
@@ -65,6 +72,19 @@ export function CarSettingsDrawer({carId, onClose, onEdit, onRemove, onSendSetti
             >
                 Отправить в контроллер
             </Button>}
+            <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{
+                    borderRadius: 3,
+                    textTransform: 'none',
+                }}
+                startIcon={<KeyboardCommandKeyIcon/>}
+                onClick={commandsEdit}
+            >
+                Настройка команд
+            </Button>
             <Button
                 fullWidth
                 variant="contained"
