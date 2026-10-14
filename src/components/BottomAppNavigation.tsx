@@ -14,9 +14,9 @@ export default function BottomAppNavigation() {
     const activeCar = useSettingsStore(state => state.getActiveCar());
 
     const getCurrentTab = () => {
-        if (pathname.includes('/sensors')) return 'Sensors';
-        if (pathname.includes('/commands')) return 'Commands';
-        if (pathname.includes('/connections')) return 'Connections';
+        if (/\/sensors(\/|$)/.test(pathname)) return 'Sensors';
+        if (/\/commands(\/|$)/.test(pathname)) return 'Commands';
+        if (/\/connections(\/|$)/.test(pathname)) return 'Connections';
         return 'Home';
     };
 
@@ -26,9 +26,9 @@ export default function BottomAppNavigation() {
             showLabels
             value={getCurrentTab()}
             onChange={(_, newValue) => {
-                if (newValue === 'Home' && getCurrentTab() !== 'Home') router.replace('/');
-                if (newValue === 'Sensors' && getCurrentTab() !== 'Sensors') router.replace('/sensors');
-                if (newValue === 'Commands' && getCurrentTab() !== 'Commands') router.replace('/commands');
+                if (newValue === 'Home' && getCurrentTab() !== 'Home') router.replace('./');
+                if (newValue === 'Sensors' && getCurrentTab() !== 'Sensors') router.replace('./sensors');
+                if (newValue === 'Commands' && getCurrentTab() !== 'Commands') router.replace('./commands');
             }}
         >
             <BottomNavigationAction label='Данные' icon={activeCar ? <SensorsIcon/> : <SensorsOffIcon/>} value="Sensors" disabled={!activeCar} />

@@ -63,13 +63,13 @@ export default function RootComponentsWrapper({children}: Readonly<{ children: R
     }, [hasHydrated]);
 
     useEffect(() => {
-        const deprecated = localStorage.getItem('mqtt_settings');
+        const deprecated = localStorage.getItem('mqtt_seting');
         if (deprecated) {
             const entityId = generateId();
             const settings = JSON.parse(deprecated) as MqttSettings;
 
             addOrUpdateConnection({ ...settings, id: entityId, name: 'Car #1' })
-            localStorage.removeItem('mqtt_settings');
+            localStorage.removeItem('mqtt_seting');
         }
     }, [hasHydrated]);
 
