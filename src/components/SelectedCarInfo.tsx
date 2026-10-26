@@ -4,6 +4,7 @@ import {Box, Typography, Paper, Chip} from '@mui/material';
 import {MqttSettings} from "@/src/types/interfaces/mqtt-settings";
 import CarImage from "@/src/components/CarImage";
 import {POINT_CUTTING} from "@/src/const/common-sx-styles";
+import {SimBalance} from "@/src/components/SimBalance";
 
 export default function SelectedCarInfo({car, isConnected, updateTime}: {
     car: MqttSettings | null,
@@ -40,6 +41,7 @@ export default function SelectedCarInfo({car, isConnected, updateTime}: {
 
                 <CarServer car={car}/>
             </Paper>
+            <SimBalance />
         </Box>
     );
 }

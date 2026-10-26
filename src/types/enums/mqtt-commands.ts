@@ -17,4 +17,5 @@ export enum MqttCommands {
   Update = 'update',
   WiFiOn = 'wifion',
   Reboot = 'reboot',
+  Ussd = 'ussd'
 }

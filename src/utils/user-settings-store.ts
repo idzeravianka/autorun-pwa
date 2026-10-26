@@ -4,7 +4,8 @@ import localforage from "localforage";
 import {createJSONStorage, persist} from "zustand/middleware";
 import {create} from 'zustand';
 import {
-    MqttSensorsDataResponse
+    MqttSensorsDataResponse,
+    UssdData,
 } from "@/src/types/interfaces/mqtt-sensors-data-response";
 import {INITIAL_USER_SETTINGS} from "@/src/const/initial-user-settings";
 import {INITIAL_MQTT_SENSORS_DATA} from "@/src/const/initial-mqtt-sensors-data";
@@ -23,6 +24,7 @@ interface SettingsState {
     mqttData: MqttSensorsDataResponse;
     mqttDataUpdateTime: string | null;
     mqttStatus: 'connected' | 'disconnected' | 'connecting';
+    ussdCache: Record<string, UssdData>;
     setSettings: (settings: UserSettings) => void;
     getCarById: (carId: string) => MqttSettings;
     removeCarById: (carId: string) => void;
@@ -32,6 +34,8 @@ interface SettingsState {
     setHasHydrated: (state: boolean) => void;
     setMqttData: (data: MqttSensorsDataResponse) => void;
     setMqttStatus: (status: 'connected' | 'disconnected' | 'connecting') => void;
+    setUssdData: (carId: string, data: UssdData) => void;
+    getUssdDataForCar: (carId: string) => UssdData | null;
 }
 
 export const carIconService = {
@@ -57,6 +61,7 @@ export const useSettingsStore = create<SettingsState>()(
             mqttData: INITIAL_MQTT_SENSORS_DATA,
             mqttDataUpdateTime: null,
             mqttStatus: 'disconnected',
+            ussdCache: {},
             setSettings: (settings: UserSettings) => set({settings}),
             getCarById: (carId: string) => {
                 const {settings} = get();
@@ -119,11 +124,22 @@ export const useSettingsStore = create<SettingsState>()(
             setHasHydrated: (state) => set({hasHydrated: state}),
             setMqttData: (data) => set({mqttData: data, mqttDataUpdateTime: new Date().toTimeString().slice(0, 8)}),
             setMqttStatus: (status) => set({mqttStatus: status}),
+            setUssdData: (carId, data) => {
+                set((state) => ({
+                    ussdCache: {
+                        ...state.ussdCache,
+                        [carId]: data,
+                    },
+                }));
+            },
+            getUssdDataForCar: (carId) => {
+                return get().ussdCache?.[carId] ?? null;
+            },
         }),
         {
             name: SETTINGS_KEY,
             storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({settings: state.settings}),
+            partialize: (state) => ({settings: state.settings, ussdCache: state.ussdCache}),
             onRehydrateStorage: () => (state) => {
                 state?.setHasHydrated(true);
             },
