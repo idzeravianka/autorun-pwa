@@ -10,7 +10,7 @@ export function parseUssdResponse(rawText: string): UssdData {
         megabytes: mbMatch ? mbMatch[1] : null,
         raw: rawText,
         updatedAt: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        lastCheckedDate: now.toISOString().split('T')[0],
+        lastCheckedDate: now.toLocaleDateString('ru-RU'),
         timestamp: now.getTime(),
     };
 }

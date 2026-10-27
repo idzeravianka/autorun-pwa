@@ -5,7 +5,6 @@ import {useSettingsStore} from "@/src/utils/user-settings-store";
 import {MqttSensorsDataResponse} from "@/src/types/interfaces/mqtt-sensors-data-response";
 import {MqttCommands} from "@/src/types/enums/mqtt-commands";
 import {showToast} from "@/src/utils/custom-events";
-import {shouldRefreshUssdBalance} from "@/src/utils/ussd-balance-hepler";
 import {parseUssdResponse} from "@/src/utils/parsers";
 
 const MQTT_DEFAULT_OPTIONS: IClientOptions = {
@@ -41,10 +40,6 @@ export const getMqttClient = (activeCar: MqttSettings, onMessageCallback: (senso
             client!.subscribe(`${activeCar.topic}/pub/ussd`, { qos: 0 });
 
             sendCommand(`${activeCar.topic}`, MqttCommands.Update);
-            const currentUssdCache = useSettingsStore.getState().getUssdDataForCar?.(activeCar.id);
-            if (shouldRefreshUssdBalance(currentUssdCache)) {
-                sendCommand(`${activeCar.topic}`, MqttCommands.Ussd);
-            }
 
             showToast('Соединение с брокером установлено');
         });

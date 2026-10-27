@@ -7,10 +7,13 @@ import {sendCommand} from "../utils/mqtt-client";
 import {Box, CircularProgress, IconButton, Typography} from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import {shouldRefreshUssdBalance} from "@/src/utils/ussd-balance-hepler";
 
 export function SimBalance() {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const activeCar = useSettingsStore((state) => state.getActiveCar());
+    const mqttData = useSettingsStore((state) => state.mqttData);
+    const isConnected = useSettingsStore(state => state.mqttStatus === 'connected');
 
     const ussdData = useSettingsStore((state) =>
         activeCar ? state.getUssdDataForCar(activeCar.id) : null
@@ -28,6 +31,12 @@ export function SimBalance() {
             setIsRefreshing(false);
         }
     }, [ussdData]);
+
+    useEffect(() => {
+        if (activeCar && isConnected && mqttData.pin.length && shouldRefreshUssdBalance(ussdData)) {
+            sendCommand(`${activeCar.topic}`, MqttCommands.Ussd);
+        }
+    }, [activeCar, isConnected, mqttData]);
 
     if (!activeCar) return null;
 
