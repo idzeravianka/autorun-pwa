@@ -73,7 +73,7 @@ export function SimBalance() {
                             БАЛАНС:
                         </Typography>
                         <Typography sx={{fontSize: '12px', fontWeight: 700}}>
-                            {ussdData?.balance ? `${ussdData.balance} руб.` : 'Нет данных'}
+                            {ussdData?.balance ? `${ussdData.balance}` : 'Нет данных'}
                             {ussdData?.megabytes ? ` (${ussdData.megabytes} MB)` : ''}
                         </Typography>
                     </Box>
